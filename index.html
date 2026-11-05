@@ -1,0 +1,1002 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Du Léman à la Dufour</title>
+<meta name="description" content="Practise the Vaud and Leysin naturalisation test with spaced repetition.">
+<meta name="theme-color" content="#1B7A4E">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Léman–Dufour">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon-192.png" type="image/png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,600..900&family=IBM+Plex+Mono:wght@500;600&family=Source+Sans+3:wght@400;500;600;700&display=swap">
+<style>
+:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+body{margin:0;padding:0}
+[hidden]{display:none!important}
+</style>
+</head>
+<body>
+<style>
+/* Layout concept: a mountain-railway altimeter. One climbing readout (metres) fed by what you really know,
+   flat hairline sections, bottom tabs on the home screens, a full-screen card flow during practice. */
+:root{
+  --bg:#EEF2EE; --surface:#FFFFFF; --ink:#112019; --muted:#566860; --line:#D3DDD5;
+  --accent:#1B7A4E; --accent-ink:#FFFFFF; --accent-soft:#DCEFE4;
+  --blue:#2F55B5; --blue-soft:#E3E9F8;
+  --amber:#8A5A00; --amber-soft:#FAEECF;
+  --red:#B8322A; --red-soft:#F8E0DC;
+  --f-display:"Archivo","Arial Narrow",system-ui,sans-serif;
+  --f-body:"Source Sans 3",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0E1613; --surface:#15201B; --ink:#E7EFE9; --muted:#8FA398; --line:#26352E;
+    --accent:#46C183; --accent-ink:#06210F; --accent-soft:#17372A;
+    --blue:#9AB2FF; --blue-soft:#1B2547;
+    --amber:#E6B556; --amber-soft:#3A2E12;
+    --red:#FF8F82; --red-soft:#3D1D19; color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0E1613; --surface:#15201B; --ink:#E7EFE9; --muted:#8FA398; --line:#26352E;
+  --accent:#46C183; --accent-ink:#06210F; --accent-soft:#17372A;
+  --blue:#9AB2FF; --blue-soft:#1B2547;
+  --amber:#E6B556; --amber-soft:#3A2E12;
+  --red:#FF8F82; --red-soft:#3D1D19; color-scheme:dark;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{background:var(--bg);color:var(--ink);font:400 16px/1.45 var(--f-body);-webkit-tap-highlight-color:transparent}
+h1,h2,h3,p{margin:0}
+h1,h2,h3{font-family:var(--f-display);text-wrap:balance}
+button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.shell{max-width:560px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:12px 112px}
+.top{display:flex;align-items:center;justify-content:space-between;gap:12px;padding-block:6px}
+.top h1{font-size:14px;font-weight:800;font-stretch:125%;letter-spacing:.09em;text-transform:uppercase}
+.pill{font:600 11px/1 var(--f-mono);letter-spacing:.04em;padding:6px 8px;border:1px solid var(--line);border-radius:999px;color:var(--muted);white-space:nowrap}
+.hero{position:relative;margin-top:8px;padding:18px 16px 10px;border:1px solid var(--line);border-radius:16px;background:var(--surface);overflow:hidden}
+.contours{position:absolute;inset:0;width:100%;height:100%;color:var(--line);opacity:.8;pointer-events:none}
+.hero>*:not(.contours){position:relative}
+.eyebrow{font:600 11px/1.2 var(--f-mono);letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.alt{display:flex;align-items:baseline;gap:6px;margin-top:6px;font:600 clamp(54px,18vw,80px)/1 var(--f-mono);letter-spacing:-.04em;font-variant-numeric:tabular-nums}
+.alt small{font:800 22px/1 var(--f-display);font-stretch:115%;letter-spacing:0;color:var(--muted)}
+.zone{margin-top:8px;font-size:15px;color:var(--muted)}
+.zone b{color:var(--ink);font-weight:700}
+.profile{display:block;width:100%;height:auto;margin-top:6px}
+.profile .wl{font:500 9px var(--f-mono);fill:var(--muted)}
+.profile .wl.on{fill:var(--ink)}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);margin-top:12px;border:1px solid var(--line);border-radius:14px;background:var(--surface)}
+.stat{padding:12px 12px 11px;min-width:0}
+.stat+.stat{border-left:1px solid var(--line)}
+.stat .v{display:flex;align-items:center;gap:8px;font:600 24px/1.1 var(--f-mono);font-variant-numeric:tabular-nums}
+.stat .l{margin-top:4px;font-size:12px;color:var(--muted)}
+.ring{width:26px;height:26px;flex:none}
+.ring circle{fill:none;stroke-width:4}
+.ring .bg{stroke:var(--line)}
+.ring .fg{stroke:var(--accent);stroke-linecap:round;transform:rotate(-90deg);transform-origin:50% 50%}
+.cta{display:flex;align-items:center;justify-content:space-between;gap:12px;width:100%;margin-top:14px;padding:17px 18px;border:0;border-radius:14px;background:var(--accent);color:var(--accent-ink);text-align:left}
+.cta b{display:block;font:800 19px/1.15 var(--f-display);font-stretch:112%}
+.cta span{display:block;margin-top:3px;font-size:14px;opacity:.88}
+.cta svg{flex:none}
+.cta:disabled{opacity:.5;cursor:default}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:12px 16px;border:1.5px solid var(--line);border-radius:12px;background:var(--surface);font-weight:600}
+.btn.pri{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.btn.warn{border-color:var(--red);color:var(--red)}
+.btn.block{display:flex;width:100%}
+.btn:disabled{opacity:.45;cursor:default}
+.sec{margin-top:22px}
+.sec>h2{font-size:12px;font-weight:800;font-stretch:125%;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+.row{display:flex;align-items:center;gap:12px;width:100%;padding:13px 2px;background:none;border:0;border-top:1px solid var(--line);text-align:left}
+.row .ic{flex:none;width:34px;height:34px;display:grid;place-items:center;border:1px solid var(--line);border-radius:10px;background:var(--surface)}
+.row .t{flex:1;min-width:0}
+.row .t b{display:block;font-weight:700}
+.row .t span{display:block;font-size:14px;color:var(--muted)}
+.row .n{font:600 13px var(--f-mono);color:var(--muted)}
+.note{padding:12px 14px;border-radius:12px;background:var(--blue-soft);font-size:15px}
+.note.amber{background:var(--amber-soft);color:var(--amber)}
+.note b{font-weight:700}
+.muted{color:var(--muted)}
+.small{font-size:13px}
+/* tabs */
+.tabs{position:fixed;left:0;right:0;bottom:0;z-index:20;background:var(--surface);border-top:1px solid var(--line);padding-bottom:env(safe-area-inset-bottom,0px)}
+.tabs>div{max-width:560px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr);padding-left:max(8px,env(safe-area-inset-left,0px));padding-right:max(8px,env(safe-area-inset-right,0px))}
+.tab{display:flex;flex-direction:column;align-items:center;gap:3px;padding:9px 4px 8px;background:none;border:0;color:var(--muted);font-size:11px;font-weight:600}
+.tab[aria-current="page"]{color:var(--accent)}
+/* territories */
+.terr{display:grid;grid-template-columns:78px repeat(3,minmax(0,1fr));gap:6px 6px;align-items:center}
+.terr .h{font:600 10px var(--f-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);text-align:center}
+.terr .rl{font:800 12px/1.1 var(--f-display);font-stretch:112%}
+.stamp{display:flex;flex-direction:column;align-items:center;gap:4px;padding:8px 2px;background:none;border:0;border-radius:12px}
+.stamp svg{width:56px;height:56px}
+.stamp .bg{fill:none;stroke:var(--line);stroke-width:4}
+.stamp .fg{fill:none;stroke:var(--accent);stroke-width:4;stroke-linecap:round;transform:rotate(-90deg);transform-origin:50% 50%}
+.stamp .tx{font:600 12px var(--f-mono);fill:var(--ink);text-anchor:middle}
+.stamp.won svg{transform:rotate(-7deg)}
+.stamp.won .in{fill:var(--accent-soft)}
+.stamp .c{font-size:11px;color:var(--muted);font-family:var(--f-mono)}
+.bar{display:flex;height:12px;border-radius:6px;overflow:hidden;background:var(--line)}
+.bar i{display:block;height:100%}
+.legend{display:flex;flex-wrap:wrap;gap:6px 14px;margin-top:8px;font-size:13px;color:var(--muted)}
+.legend i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:6px;vertical-align:-1px}
+.c0{background:var(--line)}.c1{background:var(--red)}.c2{background:var(--amber)}.c3{background:var(--blue)}.c4{background:var(--accent)}
+.ladder{list-style:none;margin:0;padding:0}
+.ladder li{display:flex;align-items:center;gap:12px;padding:9px 0;border-top:1px solid var(--line)}
+.ladder .m{font:600 13px var(--f-mono);width:62px;text-align:right;font-variant-numeric:tabular-nums}
+.ladder .d{width:12px;height:12px;border-radius:50%;border:2px solid var(--muted);flex:none}
+.ladder li.on .d{background:var(--accent);border-color:var(--accent)}
+.ladder li.on{color:var(--ink)}
+.ladder li:not(.on){color:var(--muted)}
+.ladder li.next .d{border-color:var(--accent)}
+.ladder li small{display:block;font-size:12px;color:var(--muted)}
+.badges{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.badge{padding:10px 12px;border:1px solid var(--line);border-radius:12px;background:var(--surface);min-width:0}
+.badge b{display:block;font-size:14px}
+.badge span{display:block;font-size:12px;color:var(--muted)}
+.badge:not(.got){opacity:.55}
+.badge.got{border-color:var(--accent)}
+/* cards list */
+.field{width:100%;padding:12px 14px;border:1.5px solid var(--line);border-radius:12px;background:var(--surface)}
+.chips{display:flex;gap:6px;overflow-x:auto;padding:10px 0 4px;scrollbar-width:none}
+.chip{flex:none;padding:7px 12px;border:1.5px solid var(--line);border-radius:999px;background:var(--surface);font-size:14px;font-weight:600;white-space:nowrap}
+.chip[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:var(--bg)}
+.clist details{border-top:1px solid var(--line)}
+.clist summary{display:flex;gap:10px;align-items:flex-start;padding:12px 2px;cursor:pointer;list-style:none}
+.clist summary::-webkit-details-marker{display:none}
+.clist .id{flex:none;width:30px;font:600 12px/1.6 var(--f-mono);color:var(--muted)}
+.clist .q{flex:1;min-width:0;font-size:15px}
+.clist .bx{flex:none;display:flex;gap:2px;margin-top:6px}
+.clist .bx i{width:4px;height:12px;border-radius:2px;background:var(--line)}
+.clist .bx i.on{background:var(--accent)}
+.clist .det{padding:0 2px 14px 40px;font-size:15px}
+.clist .det .ans{margin:4px 0 8px;padding:8px 10px;border-radius:10px;background:var(--accent-soft);font-weight:600}
+.clist .det ul{margin:0 0 8px;padding-left:18px;color:var(--muted)}
+/* settings */
+.set{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 0;border-top:1px solid var(--line)}
+.set label{flex:1;min-width:0}
+.set label b{display:block;font-weight:700}
+.set label span{display:block;font-size:13px;color:var(--muted)}
+.set select,.set input[type=date]{padding:9px 10px;border:1.5px solid var(--line);border-radius:10px;background:var(--surface)}
+.sw{position:relative;width:48px;height:28px;flex:none}
+.sw input{position:absolute;inset:0;opacity:0;margin:0;cursor:pointer}
+.sw i{position:absolute;inset:0;border-radius:14px;background:var(--line);transition:background .15s}
+.sw i::after{content:"";position:absolute;top:3px;left:3px;width:22px;height:22px;border-radius:50%;background:var(--surface);transition:transform .15s;box-shadow:0 1px 2px rgba(0,0,0,.25)}
+.sw input:checked+i{background:var(--accent)}
+.sw input:checked+i::after{transform:translateX(20px)}
+.sw input:focus-visible+i{outline:2px solid var(--accent);outline-offset:2px}
+textarea.field{min-height:92px;font:12px/1.4 var(--f-mono);resize:vertical}
+.why{margin:0;padding-left:18px}
+.why li{margin:6px 0}
+/* session */
+.sbar{display:flex;align-items:center;gap:12px;padding-block:6px}
+.x{flex:none;width:38px;height:38px;display:grid;place-items:center;border:1px solid var(--line);border-radius:10px;background:var(--surface)}
+.prog{flex:1;height:8px;border-radius:4px;background:var(--line);overflow:hidden}
+.prog i{display:block;height:100%;background:var(--accent);transition:width .25s}
+.prog.time i{background:var(--blue);transition:none}
+.prog.time.low i{background:var(--red)}
+.combo{flex:none;min-width:52px;text-align:right;font:600 13px var(--f-mono);color:var(--muted)}
+.combo.hot{color:var(--accent)}
+.meta{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:12px 0 10px}
+.tag{font:600 11px/1 var(--f-mono);letter-spacing:.06em;text-transform:uppercase;padding:6px 8px;border-radius:6px;border:1px solid var(--line);color:var(--muted)}
+.tag.new{background:var(--blue-soft);border-color:transparent;color:var(--blue)}
+.tag.retry{background:var(--amber-soft);border-color:transparent;color:var(--amber)}
+.str{display:flex;gap:3px;margin-left:auto}
+.str i{width:5px;height:14px;border-radius:2px;background:var(--line)}
+.str i.on{background:var(--accent)}
+.qcard{padding:18px 16px;border:1px solid var(--line);border-radius:16px;background:var(--surface)}
+.qcard .qt{font:600 21px/1.28 var(--f-body)}
+.qcard .nb{margin-top:10px;font-size:13px;color:var(--muted)}
+.opts{margin-top:12px}
+.opt{display:flex;align-items:flex-start;gap:12px;width:100%;margin-top:10px;padding:13px 14px;border:1.5px solid var(--line);border-radius:12px;background:var(--surface);text-align:left;font-size:17px;line-height:1.3}
+.opt .k{flex:none;width:24px;height:24px;display:grid;place-items:center;border:1px solid var(--line);border-radius:6px;font:600 12px var(--f-mono);color:var(--muted);margin-top:-1px}
+.opt span:last-child{min-width:0;overflow-wrap:anywhere}
+.opt.ok{border-color:var(--accent);background:var(--accent-soft)}
+.opt.no{border-color:var(--red);background:var(--red-soft)}
+.opt.dim{opacity:.5}
+.opt.pulse{animation:pulse 1.1s ease-in-out infinite}
+.opt:disabled{cursor:default}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 transparent}50%{box-shadow:0 0 0 4px var(--accent-soft)}}
+.idk{display:block;width:100%;margin-top:12px;padding:12px;background:none;border:0;color:var(--muted);font-weight:600;text-decoration:underline;text-underline-offset:3px}
+.banner{display:flex;align-items:center;gap:10px;margin:14px 0 4px;font:800 20px/1.1 var(--f-display);font-stretch:112%}
+.banner.ok{color:var(--accent)}
+.banner.no{color:var(--red)}
+.banner.sk{color:var(--blue)}
+.hook{margin-top:12px;padding:13px 14px;border-radius:12px;background:var(--blue-soft)}
+.hook .eyebrow{color:var(--blue);margin-bottom:5px}
+.next{margin-top:10px;font-size:14px;color:var(--muted)}
+.dock{position:fixed;left:0;right:0;bottom:0;z-index:20;padding:10px max(16px,env(safe-area-inset-right,0px)) calc(10px + env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px));background:linear-gradient(to top,var(--bg) 70%,transparent)}
+.dock>div{max-width:560px;margin:0 auto}
+.shake{animation:shake .32s}
+@keyframes shake{20%{transform:translateX(-5px)}40%{transform:translateX(5px)}60%{transform:translateX(-3px)}80%{transform:translateX(3px)}}
+.think{text-align:center;padding:26px 8px 8px;color:var(--muted)}
+.think b{display:block;margin-bottom:4px;font:800 18px var(--f-display);font-stretch:112%;color:var(--ink)}
+/* summary */
+.sum{padding:22px 16px 16px;text-align:center;border:1px solid var(--line);border-radius:16px;background:var(--surface);position:relative;overflow:hidden}
+.sum>*:not(.contours){position:relative}
+.gain{font:600 clamp(56px,19vw,84px)/1 var(--f-mono);letter-spacing:-.04em;font-variant-numeric:tabular-nums;color:var(--accent)}
+.sum .sub{margin-top:6px;color:var(--muted)}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);margin-top:16px;border-top:1px solid var(--line)}
+.grid3 div{padding:12px 4px 2px}
+.grid3 b{display:block;font:600 22px var(--f-mono)}
+.grid3 span{font-size:12px;color:var(--muted)}
+.miss{margin-top:8px}
+.miss div{padding:10px 0;border-top:1px solid var(--line);font-size:15px}
+.miss b{display:block;font-weight:600}
+.miss span{color:var(--accent);font-weight:600}
+.bars{display:grid;gap:8px;margin-top:6px}
+.bars div{display:grid;grid-template-columns:96px 1fr 44px;gap:10px;align-items:center;font-size:14px}
+.bars .bg{height:8px;border-radius:4px;background:var(--line);overflow:hidden}
+.bars .bg i{display:block;height:100%;background:var(--accent)}
+.bars em{font:600 12px var(--f-mono);font-style:normal;text-align:right}
+.toast{position:fixed;left:50%;top:calc(env(safe-area-inset-top,0px) + 12px);transform:translateX(-50%);z-index:50;max-width:min(92vw,420px);padding:11px 16px;border-radius:12px;background:var(--ink);color:var(--bg);font-weight:600;font-size:15px;text-align:center;box-shadow:0 6px 24px rgba(0,0,0,.25);animation:tin .25s}
+@keyframes tin{from{opacity:0;transform:translate(-50%,-8px)}}
+.intro{margin-top:12px;padding:16px;border:1px solid var(--line);border-radius:14px;background:var(--surface)}
+.intro h2{font-size:17px;font-stretch:112%;font-weight:800}
+.intro ol{margin:8px 0 12px;padding-left:20px}
+.intro li{margin:4px 0}
+@media (prefers-reduced-motion: reduce){*{animation:none!important;transition:none!important}}
+</style>
+
+<div class="shell" id="app"></div>
+<div id="tabbar"></div>
+<div id="toasts" aria-live="polite" role="status"></div>
+
+<script>
+// [id, question, options[4], correctIndex, memoryHook, doubtNote]
+// id 1-160 follows the official PDF order. Territory (section x level) is derived from id.
+const QUESTIONS = [
+[1,"Quel est le plus grand canton suisse (superficie) ?",["Zurich","Grisons","Valais","Vaud"],1,"Grisons (Graubünden) is the giant: about 7,100 km². It is also the only trilingual canton (German, Italian, Romansh), which links to question 8.",""],
+[2,"Combien y a-t-il de cantons en Suisse ?",["26","28","25","23"],0,"26 = 20 full cantons + 6 half-cantons. Jura was the 26th, in 1979.",""],
+[3,"Quel est le plus grand lac entièrement suisse ?",["Le Lac Léman","Le Lac de Neuchâtel","Le Lac Majeur","Le Lac de Zurich"],1,"The Léman is bigger but shared with France. Neuchâtel is the biggest lake that sits entirely inside Switzerland.",""],
+[4,"Quel canton est officiellement bilingue (deux langues officielles) ?",["Genève","Bâle","Vaud","Fribourg"],3,"Fribourg / Freiburg = French + German. (Valais and Berne are bilingual too, but they are not on this list.)",""],
+[5,"La prairie du Grütli se trouve au bord du …",["Lac de Bienne","Lac de Constance","Lac de Zurich","Lac des Quatre-Cantons"],3,"Grütli = the oath meadow on Lac des Quatre-Cantons (Lake Lucerne), in the heart of the founding cantons.",""],
+[6,"Combien y a-t-il d'habitants en Suisse ?",["Environ 10 millions","Environ 6 millions","Environ 5 millions","Environ 9 millions"],3,"About 9 million people. Vaud has roughly 0.85 million, a bit under a tenth of the country.",""],
+[7,"Le Palais fédéral se trouve à …",["Zurich","Fribourg","Berne","Lucerne"],2,"Palais fédéral = Parliament and government = Berne. Berne is the 'ville fédérale'.",""],
+[8,"On parle le romanche dans le canton …",["de Saint-Gall","du Valais","d’Uri","des Grisons"],3,"Romansh (romanche) lives in the Grisons. It is the 4th national language and is spoken by under 1% of people.",""],
+[9,"Quel pays n'a pas de frontière avec la Suisse ?",["Italie","Belgique","France","Allemagne"],1,"Five neighbours: France, Germany, Italy, Austria, Liechtenstein. Belgium is not one of them.",""],
+[10,"Le lac Léman est situé en Suisse et en …",["France","Italie","Autriche","Allemagne"],0,"The Léman's southern shore is French (Évian, Thonon). Swiss shore: Vaud, Geneva, Valais.",""],
+[11,"Quelle est la plus grande ville de Suisse ?",["Genève","Berne","Zurich","Bâle"],2,"Zurich is the biggest city (about 440,000). Berne is the capital but much smaller.",""],
+[12,"Le plus haut sommet suisse est …",["La Dent Blanche","La Pointe Dufour","Le Cervin","La Jungfrau"],1,"Pointe Dufour (Dufourspitze) 4,634 m, Valais, Monte Rosa. It beats the Cervin (4,478 m). This game's climb ends there.",""],
+[13,"Le Cervin se trouve dans le canton …",["de Neuchâtel","de Genève","du Valais","de Vaud"],2,"Cervin = Matterhorn = Zermatt = Valais, on the Italian border. Famous for the Toblerone shape.",""],
+[14,"Le canton le plus au nord de la Suisse est …",["Grisons","Bâle","Uri","Schaffhouse"],3,"Schaffhouse (Schaffhausen) pokes up north of the Rhine. Think 'Schaff-HAUT-se' = high north.",""],
+[15,"Une de ces réponses n'indique pas une région naturelle de la Suisse. Laquelle ?",["Jura","Alpes","Piémont","Plateau"],2,"Swiss natural regions: Jura, Plateau (Mittelland), Alpes. Piémont is an Italian region.",""],
+[16,"Quelle est la capitale de la Suisse ?",["Zurich","Bâle","Genève","Berne"],3,"Berne. Not Zurich (biggest), not Geneva (international), not Lausanne (Olympic and Federal Court).",""],
+
+[17,"De quelle couleur est le drapeau vaudois ?",["Bleu et blanc","Rouge et blanc","Vert et blanc","Rouge et noir"],2,"Vaud = green and white (vert et blanc), with the words LIBERTÉ ET PATRIE in the middle.",""],
+[18,"Quels mots figurent sur le drapeau du Canton de Vaud ?",["Liberté, égalité, fraternité","Liberté et patrie","Forts et libres","Liberté et prospérité"],1,"Vaud flag: 'Liberté et patrie'. 'Liberté, égalité, fraternité' is France. The Swiss motto is different (question 48).",""],
+[19,"Au bord de quel lac se trouve la ville d'Yverdon-les-Bains ?",["Lac Léman","Lac de Joux","Lac de Neuchâtel","Lac Majeur"],2,"Yverdon-les-Bains sits at the southern tip of Lac de Neuchâtel.",""],
+[20,"Quel est le chef-lieu du canton de Vaud ?",["Lausanne","Nyon","Montreux","Aigle"],0,"Chef-lieu = capital of the canton = Lausanne.",""],
+[21,"Lausanne se trouve au bord du …",["Lac Noir","Lac des Quatre-Cantons","Lac Léman","Lac de Joux"],2,"Lausanne on the Léman. Its lakeside district is Ouchy.",""],
+[22,"Quel canton n'a pas de frontière commune avec le canton de Vaud ?",["Jura","Valais","Fribourg","Genève"],0,"Vaud touches Geneva, Valais, Fribourg, Berne and Neuchâtel (plus France). Jura does not touch Vaud.",""],
+[23,"Quel fleuve traverse le lac Léman ?",["Le Rhône","Le Doubs","La Sarine","Le Rhin"],0,"The Rhône enters the Léman near Villeneuve and leaves it at Geneva.",""],
+[24,"Le plus haut sommet vaudois est …",["Le sommet des Diablerets","La Dent de Jaman","Les Pléiades","Les Rochers de Naye"],0,"Les Diablerets, about 3,210 m, and visible from Leysin. The other three are small local peaks.",""],
+[25,"Quel château célèbre se trouve au bord du lac Léman ?",["Le château de Gruyère","Le château de Grandson","Le château de Lenzbourg","Le château de Chillon"],3,"Chillon is on the Léman by Montreux. Gruyère is in Fribourg, Grandson on Lac de Neuchâtel, Lenzburg in Argovie.",""],
+[26,"Quelle région a été classée au patrimoine mondial de l'UNESCO en juin 2007 ?",["Lavaux","Le Signal de Bougy","Les Diablerets","Le Gros-de-Vaud"],0,"Lavaux vineyard terraces = UNESCO 2007. Picture the green steps above the Léman.",""],
+[27,"Combien de personnes habitent le canton de Vaud ?",["Environ 850'000","Environ 2 millions","Environ 500'000","Environ 1,2 million"],0,"About 850,000. Vaud is 3rd in Switzerland by population, after Zurich and Berne.",""],
+[28,"Quelle rivière traverse le canton de Vaud ?",["Le Doubs","La Limmat","La Venoge","L'Aar"],2,"La Venoge is the Vaud river (it flows to the Léman near Morges). Doubs is Jura, Limmat is Zurich, Aar is Berne.",""],
+[29,"Le chef-lieu du district Riviera-Pays d'Enhaut est …",["Payerne","Vevey","Nyon","Echallens"],1,"Riviera = Vevey and Montreux. The district seat is Vevey.",""],
+[30,"Sur la population du canton de Vaud, les résidents étrangers représentent …",["environ 10%", "environ 20%", "environ 25%", "environ 30%"],3,"Roughly a third of Vaud residents hold a foreign passport, and the key says about 30%.",""],
+[31,"Un de ces monuments ne se trouve pas en ville de Lausanne. Lequel ?",["Statue de Charlie Chaplin","Notre–Dame du Valentin","Château Saint-Maire","Palais de Rumine"],0,"The Chaplin statue is in Vevey (his museum is in Corsier-sur-Vevey). The other three are in Lausanne.",""],
+[32,"Quel est le terminus du LEB (chemin de fer) ?",["Boulens","Begnins","Blonay","Bercher"],3,"LEB = Lausanne – Échallens – Bercher. The last B is the terminus: Bercher.",""],
+
+[33,"Dans quel district se situe la commune de Leysin ?",["District d’Aigle","District du Gros de Vaud","District Riviera-Pays-d’Enhaut","District de Lausanne"],0,"Leysin belongs to the district d'Aigle, down in the Rhône valley.",""],
+[34,"Quel est le chef-lieu du district d’Aigle ?",["Vevey","Aigle","Lausanne","Montreux"],1,"District d'Aigle, chef-lieu Aigle. Same name, and also where the Leysin train starts.",""],
+[35,"Quelle est la superficie de la commune de Leysin ?",["2510 hectares", "1264 hectares", "1854 hectares", "2138 hectares"],2,"About 18.5 km², so 1854 hectares. Hook: the postcode is 1854 too.",""],
+[36,"Quelles sont les communes vaudoises limitrophes de la commune ?",["Ormont-Dessous, Ormont-Dessus, Ollon, Yvorne","Aigle, Ollon, Ormont-Dessous, Ormont-Dessus","Aigle, Ormont-Dessous, Ormont-Dessus, Yvorne","Aigle, Corbeyrier, Ormont-Dessous, Yvorne"],3,"Neighbours of Leysin: Aigle, Corbeyrier, Ormont-Dessous, Yvorne. Hook A-C-O-Y: 'A Cow On Yvorne'.",""],
+[37,"Combien de communes compte le district d’Aigle ?",["12","15","20","7"],1,"The district d'Aigle has 15 communes (Aigle, Bex, Gryon, Leysin, Ollon, Villeneuve, Yvorne and others).",""],
+[38,"A quelle altitude se trouve le sommet de la Berneuse ?",["1260 m","1050 m","1540 m","2048 m"],3,"Berneuse = 2,048 m, with the rotating restaurant Kuklos. Leysin village sits much lower, about 1,260 m.",""],
+[39,"Dans quelle région géographique se situe Leysin ?",["Riviera","Chablais valaisan","Alpes Vaudoises","Pays-d’Enhaut"],2,"Leysin is in the Alpes Vaudoises (Vaud Alps), not the Riviera (lakeside).",""],
+[40,"Comment se nomment les 3 lacs de Leysin ?",["Léman, Lioson, Aï", "Léman, Aï, Mayen", "Lioson, Aï, Mayen", "Aï, Mayen, Segray"],3,"Leysin's mountain lakes: Aï, Mayen, Segray. The Léman is far below and not in Leysin.",""],
+
+[41,"Le plus ancien pacte de la Confédération a été signé en 1291 par les cantons de …",["Vaud, Genève, Neuchâtel","Bâle, Soleure, Argovie","Uri, Schwytz, Unterwald","Uri, Glaris, Grisons"],2,"1291 founders: Uri, Schwytz, Unterwald. Hook: U-S-U.",""],
+[42,"Quelle est la date souvent considérée comme celle de la naissance de la Suisse ?",["1296","1291","1294","1390"],1,"1291, and the date repeats in questions 41, 43 and 49. It shows up in the 1er août celebrations.",""],
+[43,"Les premiers Confédérés ont prêté serment …",["Au château de Chillon","Sur la plaine du Grütli","Sur le Pont de la Chapelle à Lucerne","Au Palais de Rumine"],1,"Serment du Grütli: the oath on the Grütli meadow (question 5).",""],
+[44,"Guillaume Tell était …",["Un célèbre soldat au service d'une puissance étrangère","Un personnage légendaire qui s'est battu contre des seigneurs étrangers","Un aristocrate de la famille des Habsbourg","Un chef de la guerre des paysans"],1,"Guillaume Tell = a legendary figure who fought foreign lords (the Habsburgs). He is a symbol, not a verified historical person.",""],
+[45,"Le drapeau suisse s'inspire du drapeau d'un canton. Lequel ?",["Schwytz","Vaud","Berne","Valais"],0,"The Swiss cross comes from the Schwyz banner. 'Schwyz' gave its name to 'Suisse'.",""],
+[46,"Quelle guerre civile entre cantons conservateurs et cantons progressistes a favorisé la création de la Suisse moderne ?",["la bataille de Sempach","la guerre de Cent Ans","la guerre du Sonderbund","la guerre de Sécession"],2,"Sonderbund war (1847), then the 1848 constitution. The Sonderbund was the 'separate league' of conservative Catholic cantons.",""],
+[47,"La première Constitution fédérale date de …",["1291","1515","1848","1874"],2,"1848 first federal constitution. 1874 was a major revision. The current one dates from 1999.",""],
+[48,"Quelle est la devise de la Confédération ?",["Un pour tous, tous pour un","Liberté et patrie","Liberté, égalité, fraternité","L'union fait la force"],0,"Swiss motto: 'Un pour tous, tous pour un'. 'Liberté et patrie' is the Vaud one.",""],
+[49,"Qu'est-ce qu'on fête le 1er août ?",["L'alliance des 26 cantons","L'accord entre les 7 cantons romands","Le pacte fédéral de Uri, Schwytz et Unterwald","La victoire des 8 cantons primitifs"],2,"1er août = Fête nationale = the 1291 pact of Uri, Schwytz and Unterwald.",""],
+[50,"La Landsgemeinde est",["Une assemblée pendant laquelle on vote à main levée","Un plat typique","Une danse","Une bataille"],0,"Landsgemeinde = an open-air assembly voting by raised hand (still held in Glaris and Appenzell Rhodes-Intérieures).",""],
+[51,"Qui a fondé la Croix-Rouge ?",["Henri Dunant","Major Davel","Albert Hofmann","Henri Guisan"],0,"Henri Dunant, Geneva, 1863. Davel is a Vaud patriot, Hofmann discovered LSD, Guisan was WWII general.",""],
+[52,"Pendant les deux guerres mondiales, la Suisse …",["est restée neutre","a combattu aux côtés de la France","a combattu aux côtés des Etats-Unis","a combattu aux côtés de l'Allemagne"],0,"Neutral in both wars, and armed neutrality is still a Swiss principle.",""],
+[53,"Les femmes suisses ont obtenu le droit de vote au niveau fédéral dans …",["les années 60","les années 50","les années 70","les années 80"],2,"Federal women's vote: 1971. Vaud was first at cantonal level in 1959 (question 69).",""],
+[54,"Quel canton est devenu le 26ème canton suisse ?",["Neuchâtel","Vaud","Jura","Valais"],2,"Jura = the 26th canton, created in 1979 after separating from Berne.",""],
+[55,"La Suisse est entrée à l'ONU en …",["2002","1989","1945","1920"],0,"Switzerland joined the UN very late, in 2002. Geneva hosts a UN seat but Switzerland was not a member until then.",""],
+[56,"La Suisse n'est pas dans l'UE (Union Européenne), mais elle a passé avec l'UE des …",["Accords bilatéraux","Accords institutionnels","Accords militaires","Accords unilatéraux"],0,"Accords bilatéraux = bilateral agreements with the EU (bi = two sides).",""],
+
+[57,"Le nom VAUD signifie …",["pays des forêts", "pays des forts (valides)", "pays des vallées", "pays des bouchons vaudois"],0,"Answer key: pays des forêts. Memory trick: Vaud sounds like the German word Wald, which means forest. The 'forts (valides)' option is the trap.",""],
+[58,"De 1207 à 1536, le Pays de Vaud faisait partie …",["de l'Italie","de la France","de la Savoie","du Val d'Aoste"],2,"1207–1536 = Savoie (Savoy). Then Berne took over in 1536.",""],
+[59,"Au XVIe siècle, le Pays de Vaud a été conquis par le canton …",["de Berne","de Genève","du Valais","du Jura"],0,"1536: Berne conquers Vaud, and the Bernese rule lasts until 1798.",""],
+[60,"Le canton de Vaud est devenu officiellement protestant en …",["1291","1536","1798","1803"],1,"1536 = Bernese conquest and the Reformation arrive together. One date, two changes.",""],
+[61,"Le principal réformateur vaudois est …",["Jean Calvin","Martin Luther","John Knox","Pierre Viret"],3,"Pierre Viret is the Vaud reformer. Calvin = Geneva, Luther = Germany, Knox = Scotland.",""],
+[62,"Qui était le Major Davel ?",["Une figure légendaire","Un patriote vaudois","Un peintre","Le vainqueur du Sonderbund"],1,"Major Davel = a real Vaud patriot who tried to free Vaud from Berne in 1723.",""],
+[63,"Le Major Davel est mort …",["Sur le champ de bataille","Pendu","Décapité (la tête coupée)","Dans son lit"],2,"Davel was beheaded (décapité) in 1723 at Vidy, Lausanne.",""],
+[64,"On célèbre l'indépendance vaudoise le …",["1er août","24 janvier","1er mai","14 juillet"],1,"24 janvier, the Vaud independence day. 1er août is the national day, 14 juillet is France.",""],
+[65,"L'indépendance vaudoise date de …",["1798","1902","1848","1291"],0,"1798: Vaud breaks from Berne (24 January). Hook: 24.01.1798.",""],
+[66,"Le Canton de Vaud est entré dans la Confédération en …",["1291","1515","1803","1848"],2,"Vaud joined the Confederation in 1803. Independent 1798, canton 1803.",""],
+[67,"Quelle femme politique d'origine valdo-genevoise a habité le château de Coppet ?",["Jeanne d'Arc","Anna Göldin","Ella Maillart","Mme de Staël"],3,"Madame de Staël lived at Coppet, on the Léman. She hosted a famous circle of writers.",""],
+[68,"Que représente la date du 14 avril 1803 pour le Canton de Vaud ?",["L'indépendance vaudoise","L'entrée du Pays de Vaud dans la Confédération","La naissance du Général Guisan","La date d'exécution du Major Davel"],1,"14 avril 1803 = Vaud enters the Confederation. 14.04 is why other events are dated 14 April (question 148).",""],
+[69,"Le premier canton suisse à accorder le droit de vote aux femmes est le canton …",["du Valais","de Vaud","de Bâle","de Zurich"],1,"Vaud, 1959, first canton for women's vote. The country followed in 1971.",""],
+[70,"L'actuelle Constitution du Canton de Vaud date de …",["1848","1885","1945","2003"],3,"Current Vaud constitution = 2003.",""],
+[71,"Qui était le général de l'armée suisse pendant la deuxième guerre mondiale ?",["Le vaudois Henri Guisan","L'argovien Hans Herzog","Le zurichois Ulrich Wille","Le genevois Guillaume Henri Dufour"],0,"General Henri Guisan was Vaudois, WWII. Herzog and Wille were WWI-era, and Dufour led the Sonderbund war.",""],
+[72,"En quelle année l’Exposition nationale a-t-elle été organisée à Lausanne ?",["En 2002","En 1964","En 1930","En 1956"],1,"Expo 64 in Lausanne. Expo.02 was in the Three Lakes region (Neuchâtel, Bienne, Yverdon, Morat).",""],
+
+[73,"Quel était le nom du village de Leysin en 1232 ?",["Leysins", "Leissens", "Lausanne", "Leysain"],1,"Old spelling: Leissens. Old forms use 'ei', not 'ey'.",""],
+[74,"En quelle année a été inauguré le train Aigle-Leysin ?",["1897", "1917", "1875", "1953"],0,"Answer key: 1897. Some sources date the opening of service to 1900, so if two dates appear, 1897 is the one the test expects.",""],
+[75,"Quelle maladie était soignée dans les sanatoriums de Leysin au début du siècle passé ?",["Rhume","Toux","Tuberculose","Parkinson"],2,"Tuberculose. Leysin's sun and altitude made it a sanatorium town.",""],
+[76,"Quand a été construite la première télécabine à Leysin ?",["1937", "1988", "1960", "1957"],3,"Answer key: 1957. Hook: the first télécabine came in the 1950s.",""],
+[77,"De quand date l’histoire de la région de Leysin ?",["515", "650", "1100", "1333"],0,"Answer key: 515, the oldest date in the history of the Leysin region. The name 'Leissins' itself is first written down around 1231.",""],
+[78,"Quelle Reine a inauguré un hôtel qui porte son nom à Leysin ?",["Elisabeth II", "Secrétan", "Fabiola", "Victoria"],2,"Answer key: Fabiola, the late Queen of the Belgians. Victoria is the trap, because she is the famous queen you would expect.",""],
+[79,"Quel est le surnom des habitants de Leysin ?",["Les Mouergues","Lè Faragnat","Les Peck-à-batz","Les Damounais"],1,"Nickname: 'Faragnat'. The proper name is Leysenouds (question 153).",""],
+[80,"Auguste Rollier et Léopold de Reynier étaient d’illustres…",["Pasteurs","Musiciens","Peintres","Médecins"],3,"Médecins. Rollier pioneered heliotherapy (sun cure) for tuberculosis in Leysin.",""],
+
+[81,"Qui préside le Conseil fédéral en 2026 ?",["Guy Parmelin", "Karin Keller-Sutter", "Beat Jans", "Ignazio Cassis"],0,"2026 president: Guy Parmelin, who is from Vaud. The presidency rotates every year.","Matches your answer key (dated August 2026). Offices change hands, so re-check shortly before the test."],
+[82,"Combien de membres compte le Conseil fédéral ?",["7","5","8","9"],0,"7 federal councillors, who govern together as a collegial body.",""],
+[83,"Pour combien de temps est élu/e le/la président/e de la Confédération ?",["4 ans","5 ans","1 an","2 ans"],2,"1 an. The president is just the first among equals.",""],
+[84,"Quels sont les 3 pouvoirs du système politique en Suisse ?",["Législatif, exécutif, judiciaire","Parlementaire, civil, religieux","Syndical, médiatique, judiciaire","Législatif, religieux, syndical"],0,"Three powers: législatif (makes laws), exécutif (applies them), judiciaire (judges). L-E-J.",""],
+[85,"Les citoyens peuvent demander une consultation populaire (votation) sur un nouveau texte de loi par …",["le lobbying","une manifestation","un référendum","une grève"],2,"Référendum = a vote on a law the Parliament has already passed. (Initiative = a citizen proposal for a new text.)",""],
+[86,"Quelle chambre du Parlement fédéral représente le peuple ?",["Le Conseil national","Le Conseil des Etats","Le Conseil fédéral","Le Grand Conseil"],0,"Conseil national = the people (200 seats). Conseil des États = the cantons (46 seats). Conseil fédéral is the government.",""],
+[87,"Le Palais fédéral est le siège …",["du Musée national suisse","du Parlement","de l'Université","de la Télévision suisse"],1,"The Palais fédéral houses the Parlement, in Berne.",""],
+[88,"Dans quel texte de loi suisse se trouvent les droits fondamentaux ?",["Code pénal","Constitution","Code civil","Règlement communal"],1,"Droits fondamentaux = in the Constitution (fundamental rights, the top-level text).",""],
+[89,"Qui élit les membres du Tribunal fédéral ?",["le Conseil fédéral","l'Assemblée fédérale","le peuple et les cantons","les communes"],1,"Assemblée fédérale = the two chambers together. It elects the Conseil fédéral, the Federal Tribunal judges and the general in wartime.",""],
+[90,"La Suisse est gouvernée par…",["Un Conseil fédéral","Un Président","Un Roi","Un Premier ministre"],0,"A Conseil fédéral of 7 (collegial). Nobody is 'the leader'.",""],
+[91,"Quel est le rôle du pouvoir législatif ?",["Il vérifie les lois","Il applique les lois","Il élabore les lois","Il contrôle les routes"],2,"Législatif élabore (makes) les lois. Hook: 'L' for Laws.",""],
+[92,"Quel est le rôle du pouvoir exécutif ?",["Il applique les lois et gouverne","Il décide des lois qui régissent l'Etat","Il s'assure que les lois soient bien appliquées","Il élit le gouvernement"],0,"Exécutif applique les lois et gouverne. 'Execute' the laws.",""],
+[93,"Qui représente le pouvoir législatif au niveau fédéral ?",["Le Parlement fédéral","Le Conseil d'Etat","Le Grand Conseil","La Croix-Rouge"],0,"Federal level: Parlement fédéral. Canton: Grand Conseil. Commune: Conseil communal.",""],
+[94,"En Suisse, qui élit le Conseil fédéral ?",["Le Conseil d'Etat","Le peuple","L'Assemblée fédérale (le Conseil national et le Conseil des Etats)","Les cantons"],2,"Not the people: the Assemblée fédérale elects the Conseil fédéral.",""],
+[95,"Quel parti politique suisse est de gauche ?",["Parti libéral-radical (PLR)","Parti socialiste (PS)","Union démocratique du centre (UDC)","Le Centre"],1,"PS = gauche. PLR = liberal-radical (centre-right). UDC = right. Le Centre = centre.",""],
+[96,"Le Tribunal fédéral se trouve à …",["Lausanne","Genève","Berne","Fribourg"],0,"The Federal Tribunal sits in Lausanne, so the judiciary is not in Berne.",""],
+
+[97,"Quel est le nom de la Présidente du Conseil d'Etat vaudois ?",["Rebecca Ruiz", "Christelle Luisier Brodard", "Isabelle Moret", "Nuria Gorrite"],1,"Christelle Luisier Brodard, PLR, president of the Vaud Conseil d'Etat.","Matches your answer key (dated August 2026). Offices change hands, so re-check shortly before the test."],
+[98,"Qui est le syndic de Lausanne ?",["Daniel Brélaz", "Grégoire Junod", "Guy Parmelin", "Pierre-Yves Maillard"],1,"Grégoire Junod (PS) became syndic in 2021. Brélaz was the previous syndic.","Matches your answer key (dated August 2026). Offices change hands, so re-check shortly before the test."],
+[99,"Qui représente le pouvoir législatif au niveau cantonal ?",["Le Conseil d'Etat","Le Parlement fédéral","Le Grand Conseil","La Croix-Rouge"],2,"Canton législatif = Grand Conseil (150 members).",""],
+[100,"Qui représente le pouvoir exécutif dans le canton de Vaud ?",["Le Conseil d'Etat","Le Tribunal cantonal","Le Grand Conseil","Le Conseil fédéral"],0,"Canton exécutif = Conseil d'Etat (7 members).",""],
+[101,"Qui élit le Conseil d'Etat vaudois ?",["La Municipalité","Le peuple","Le Grand Conseil","Le Conseil fédéral"],1,"In Vaud the people elect the Conseil d'Etat. Unlike the federal level.",""],
+[102,"Que signifie DSAS ?",["Département du soleil et des affaires solaires","Département de la santé et de l'action sociale","Département du sport et de l'activité sportive","Département du social et des associations sportives"],1,"DSAS = Santé et Action Sociale (health and social action).",""],
+[103,"Dans le canton de Vaud, les personnes de nationalité étrangère peuvent à certaines conditions voter, élire et être élues au niveau …",["fédéral","fédéral, cantonal et communal","cantonal","communal"],3,"Foreigners in Vaud: communal level only (B/C permit, 10 years in Switzerland, 3 in Vaud).",""],
+[104,"Pour combien d'années est élu le Conseil d'Etat ?",["10 ans","1 an","2 ans","5 ans"],3,"5 ans, the standard Vaud legislature.",""],
+[105,"Combien de membres compte le Grand Conseil vaudois ?",["250","350","150","20"],2,"Grand Conseil = 150 deputies.",""],
+[106,"Quel est le pouvoir judiciaire dans le canton de Vaud ?",["Grand Conseil","Conseil d'Etat","Tribunal cantonal","Municipalité"],2,"Judiciaire = Tribunal cantonal.",""],
+[107,"Où se trouve le siège du Conseil d'Etat vaudois ?",["Musée olympique","Château cantonal (Château Saint-Maire)","La Cité","Cathédrale de Lausanne"],1,"Conseil d'Etat sits in the Château Saint-Maire, in La Cité, in Lausanne.",""],
+[108,"Quel est le rôle du Ministère public ?",["conduire les investigations et défendre la société devant les tribunaux","informer les médias des affaires politiques courantes du canton","organiser les votations et les élections dans le canton","surveiller la sphère publique et le fonctionnement des transports"],0,"Ministère public = prosecutors: investigate and defend society in court.",""],
+[109,"Quelles sont les unités administratives ou politiques du canton de Vaud ?",["Demi-cantons, villes et quartiers", "Sous-cantons, communes et quartiers", "Districts, arrondissements et communes", "Arrondissements, communes et quartiers"],2,"Vaud is organised into districts and communes. 'Districts, arrondissements et communes' is the closest option.",""],
+[110,"Combien de signatures faut-il obtenir pour qu'une initiative populaire soit soumise au vote au niveau cantonal ?",["12’000 signatures en 4 mois","1000 signatures en 1 semaine","aucune signature","200 signatures en 1 année"],0,"Vaud initiative: 12,000 signatures within 4 months.",""],
+[111,"Qui est le porte-parole officiel du gouvernement vaudois ?",["Les préfets","Le Chancelier d’Etat","Les députés","La presse vaudoise"],1,"Chancelier d'Etat = official spokesperson of the government. Préfets run the districts.",""],
+[112,"A partir de quel âge les citoyennes et citoyens suisses peuvent voter au niveau cantonal ?",["15 ans","18 ans","17 ans","21 ans"],1,"18 ans (majorité). Glaris is the only canton that allows 16.",""],
+
+[113,"Combien de membres compte le conseil communal ?",["45","35","20","40"],0,"Leysin Conseil communal = 45 members, 5 on the Municipalité. Hook: 45 and 5 both end in 5.",""],
+[114,"Qui détient le pouvoir législatif au niveau communal ?",["La Municipalité","Le Justice de Paix","La Préfecture","Le Conseil communal"],3,"Commune législatif = Conseil communal. Commune exécutif = Municipalité.",""],
+[115,"Qui est le/la syndic/que ?",["Joan Gallmeier", "Laurence Habegger", "Jean-Marc Udriot", "Pierre-Alain Dubois"],1,"Answer key: Laurence Habegger. Jean-Marc Udriot appears in 2025 sources, so he is the previous syndic. Joan Gallmeier is the président du Conseil communal, another trap.","Matches your answer key (dated August 2026). Offices change hands, so re-check shortly before the test."],
+[116,"Quel pouvoir la Municipalité exerce-t-elle ?",["Exécutif","Législatif","Judiciaire","De séduction"],0,"Municipalité = exécutif.",""],
+[117,"Combien la Municipalité compte-t-elle de membres ?",["3 membres","5 membres","7 membres","6 membres"],1,"Municipalité = 5 members (Conseil communal = 45).",""],
+[118,"Comment appelle-t-on le responsable de l’exécutif communal ?",["Le maire","Le président de commune","Le bourgmestre","Le syndic"],3,"Vaud says 'syndic' where others say maire or bourgmestre.",""],
+[119,"Qui dirige les séances du Conseil communal ?",["Le syndic","L’huissier","Le président du Conseil communal","Le secrétaire municipal"],2,"The Conseil communal has its own président, separate from the syndic.",""],
+[120,"Qui élit la Municipalité ?",["Le Conseil communal","Les citoyens de Leysin","Les employés communaux","La Préfecture"],1,"In Vaud communes with a Conseil communal, the people elect the Municipalité as well.",""],
+
+[121,"Quelle est la langue officielle la plus parlée en Suisse ?",["Français","Allemand","Italien","Romanche"],1,"Allemand (Swiss-German dialects at home, standard German in writing), about 60% of the population.",""],
+[122,"Qu'est-ce que la \"barrière de roesti\" ou \"Röstigraben\" ?",["Un plat typiquement suisse","Le titre d'une chanson","Les différences de mentalité entre la Suisse romande et la Suisse alémanique","Un quartier de la ville de Berne"],2,"Röstigraben = the 'rösti ditch' between French and German-speaking Switzerland: culture and voting differences.",""],
+[123,"Que signifie l'abréviation CH ?",["Centre helvétique","Commune helvétique","Communauté helvétique","Confédération helvétique"],3,"CH = Confoederatio Helvetica, Latin, so it needs no language.",""],
+[124,"Qu'est-ce que le \"Schwyzerdütsch\" ?",["Une spécialité culinaire","Une montagne","Le dialecte suisse-allemand","Un sport"],2,"Schwyzerdütsch = Swiss-German dialect.",""],
+[125,"Quel héros de l'indépendance suisse est toujours représenté avec une arbalète et une pomme ?",["Major Davel","Charlemagne","Guillaume Tell","Heidi"],2,"Guillaume Tell: crossbow (arbalète) and apple.",""],
+[126,"Quelles sont les 4 langues nationales de la Suisse ?",["allemand, français, anglais, romanche","français, italien, suisse-allemand, romanche","français, allemand, italien, romanche","anglais, français, italien, espagnol"],2,"4 national languages: allemand, français, italien, romanche. No English, and 'Swiss-German' is not a language of its own.",""],
+[127,"Quel personnage féminin se trouve sur plusieurs pièces de monnaie suisse ?",["Helvetia","Heidi","Ursula Andress","Marie"],0,"Helvetia, the female personification of Switzerland, is on the coins.",""],
+[128,"En Suisse, payer des impôts est …",["une obligation","une liberté","un choix","une possibilité facultative"],0,"Paying taxes is an obligation.",""],
+[129,"Quel aliment compose principalement les « rösti » (plat typique suisse) ?",["La pomme de terre","La carotte","L’oignon","Le chou"],0,"Rösti = grated potato, fried. Pomme de terre.",""],
+[130,"Dans quelle ville peut-on voir la statue de Guillaume Tell ?",["Schwytz","Altdorf","Genève","Sion"],1,"Altdorf (canton d'Uri) has the Tell statue. Hook: Alt-DORF, a village.",""],
+[131,"Qu'est-ce qu'un cor des Alpes ?",["Un instrument de musique","Un animal","Une fleur","Un champignon"],0,"Cor des Alpes = alphorn, a very long wooden horn.",""],
+[132,"Dans quelle ville suisse se trouve la \"fosse aux ours\" ?",["Martigny","Zurich","Bâle","Berne"],3,"Berne's emblem is the bear (Bär), and the bear pit (Bärengraben) is there.",""],
+[133,"Que protège la Garde Suisse depuis 1506 ?",["Le Pape","Le Carnaval de Bâle","Le Parlement","Le siège du CIO"],0,"Garde suisse: the Pope, in the Vatican, since 1506.",""],
+[134,"Où se fête le plus grand carnaval de Suisse ?",["Bâle","Lausanne","Genève","Sion"],0,"Bâle: the largest Swiss carnival (Fasnacht).",""],
+[135,"Citez un sport national",["Le base-ball","Le cricket","Le waterpolo","La lutte"],3,"La lutte (Swiss wrestling, Schwingen) is the national sport.",""],
+[136,"Tout homme de nationalité suisse est en principe astreint au …",["Concours d'admission des sapeurs-pompiers","Travail","Service militaire","Service civil"],2,"Service militaire (compulsory in principle for Swiss men; civil service is the alternative).",""],
+
+[137,"Quel est le plat culinaire typique du canton de Vaud ?",["La raclette","Le papet","Les rösti","La fondue"],1,"Papet vaudois: leeks and potatoes, often served with saucisson. Raclette is Valais, rösti is Bernese, fondue is Fribourg or Savoy.",""],
+[138,"Dans quel canton l'italien est-elle la langue principale ?",["Valais","Tessin","Saint-Gall","Glaris"],1,"Tessin (Ticino) is the Italian-speaking canton.",""],
+[139,"Où se trouvent le Musée Olympique et le siège du Comité international olympique (CIO) ?",["Villeneuve","Lausanne","Morges","Genève"],1,"Lausanne = the Olympic capital (museum and IOC).",""],
+[140,"Où a lieu chaque année le meeting d'athlétisme \"Athletissima\" ?",["Lausanne","Payerne","Vevey","Montreux"],0,"Athletissima is in Lausanne, which has the Pontaise stadium.",""],
+[141,"Dans quelle ville a lieu le festival du \"Paléo\" ?",["Nyon","Morges","Lausanne","Montreux"],0,"Paléo Festival is in Nyon (and Paléo starts with P like Pop).",""],
+[142,"Où se déroule le Festival de Jazz créé par Claude Nobs ?",["Yverdon-les-Bains","Montreux","Nyon","Genève"],1,"Montreux Jazz Festival, founded by Claude Nobs.",""],
+[143,"Quel célèbre ballet est établi à Lausanne ?",["Ballet Jobin","Ballet Juvet","Ballet Godard","Ballet Béjart"],3,"Béjart Ballet Lausanne (Maurice Béjart).",""],
+[144,"Où se trouve le musée créé à la mémoire de Charlie Chaplin ?",["Yverdon-les-Bains","Nyon","Corsier-sur-Vevey","Lausanne"],2,"Chaplin's World is in Corsier-sur-Vevey (the statue is in Vevey).",""],
+[145,"Quel bâtiment a été inauguré à Lausanne le 14 avril 2017 ?",["Maison du sport international","Palais de Beaulieu","Parlement vaudois","Opéra de Lausanne"],2,"The Parlement vaudois was inaugurated on 14 avril 2017 (again the 14 April, as in 1803).",""],
+[146,"Où est célébrée la \"Fête des Vignerons\" ?",["Vevey","Morges","Aigle","Sion"],0,"Fête des Vignerons: Vevey, about once a generation (every 20 to 25 years).",""],
+[147,"Quelle grande école polytechnique se trouve dans la région de Lausanne ?",["l’UNIL","l’EPFL","la HEP","la HEG"],1,"EPFL = the Polytechnique (school of engineering). UNIL = university.",""],
+[148,"A quelle date symbolique le Château cantonal Saint-Maire a-t-il ouvert ses portes après plus de deux ans de travaux ?",["25 décembre 2017","15 novembre 1315","14 février 2000","14 avril 2018"],3,"14 avril 2018, a symbolic date: 14 April 1803 was Vaud's entry into the Confederation.",""],
+[149,"Quel grand tennisman suisse et vaudois est né à Lausanne en 1985 ?",["Marc Rosset","Stanislas Wawrinka","Yannick Noah","Roger Federer"],1,"Stan Wawrinka, born in Lausanne in 1985. Federer was born in Basel in 1981.",""],
+[150,"Le réseau de transport public dans le canton de Vaud s'appelle …",["mobilis","transN","tpf","tpg"],0,"mobilis = Vaud. tpf = Fribourg, tpg = Geneva, transN = Neuchâtel.",""],
+[151,"Dans quelle ville vaudoise y a-t-il un métro ?",["Vevey","Nyon","Montreux","Lausanne"],3,"Lausanne has two metro lines, the m1 and the m2. It is the only metro in Vaud.",""],
+[152,"Dans quelle ville se trouve le musée de l'alimentation ?",["Rolle","Gland","Vevey","Yverdon-les-Bains"],2,"Alimentarium = the food museum, Vevey (Nestlé's home).",""],
+
+[153,"Comment s’appellent les habitants de Leysin ?",["Les Ormonans","Les Leysenouds","Les Robaleux","Les Damounais"],1,"Leysenouds (and the municipal paper is called 'Le Leysenoud').",""],
+[154,"Comment s’appelle actuellement le journal officiel de la commune de Leysin ?",["Le Régional","Leysin Actualités","Le Leysenoud","Courrier de Leysin"],2,"Le Leysenoud, the municipal journal. Same word as the inhabitants.",""],
+[155,"Quel sport peut-on pratiquer dans un club à Leysin ?",["Le ski","Le bobsleigh","Le baseball","L’aviron"],0,"Le ski: Leysin is a mountain resort. There is no lake for rowing (aviron).",""],
+[156,"Où se trouve l’administration communale de Leysin ?",["Au Feydey","Au Village","En Veyges","En Crettaz"],1,"Administration communale: Maison de Commune, Rue du Village 39. Hook: 'Au Village'.",""],
+[157,"Quelle infrastructure de loisirs se trouve à Leysin ?",["Labyrinthe Aventure", "Parc Aventure", "Aquapark", "Tobogganing Park"],3,"Answer key: Tobogganing Park (think toboggan run). Parc Aventure is the trap, because it sounds more natural for a mountain resort.",""],
+[158,"A quelle manifestation peut-on participer dans la commune de Leysin ?",["La Braderie","La Nuit des Fées","La Nuit des Diables","Festival international de ballons à air chaud"],1,"La Nuit des Fées (August). Fairies, not devils.",""],
+[159,"Quel club sportif n’existe pas à Leysin ?",["Aviron", "Equestre", "Hockey", "Curling"],0,"Aviron (rowing) does not exist in Leysin, since there is no lake. Same trap as question 155.",""],
+[160,"L’écusson de notre commune comporte :",["Un sapin","Une demi-lune","Un aigle","Un loup"],0,"Leysin's coat of arms: a sapin (fir tree) growing from green hills.",""]
+];
+
+</script>
+<script>
+(function(){
+'use strict';
+var INT=[0,1,2,4,8,16,35,70];
+var RDY=[0,.18,.4,.58,.72,.84,.93,.97];
+var A0=372,A1=4634,N=160,KEY='ldld.v1';
+var WP=[
+ {a:372,n:'Lac Léman',s:'Léman',t:'Where every climb starts'},
+ {a:495,n:'Lausanne',s:'Lausanne',t:'La Cité, the cantonal capital'},
+ {a:1263,n:'Leysin',s:'Leysin',t:'Your village'},
+ {a:2048,n:'La Berneuse',s:'Berneuse',t:'Kuklos viewpoint'},
+ {a:3210,n:'Les Diablerets',s:'Diablerets',t:'Highest point in Vaud'},
+ {a:4478,n:'Le Cervin',s:'Cervin',t:'The Matterhorn, Valais'},
+ {a:4634,n:'Pointe Dufour',s:'Dufour',t:'Highest point in Switzerland'}
+];
+var SECT=['Géographie','Histoire','Politique','Social'];
+var LEVS=['Suisse','Vaud','Leysin'];
+var CARD={};
+QUESTIONS.forEach(function(r){var i=r[0]-1,b=Math.floor(i/40),m=i%40,l=m<16?0:(m<32?1:2);CARD[r[0]]={id:r[0],q:r[1],o:r[2],a:r[3],h:r[4],f:r[5],s:b,l:l,k:b*3+l};});
+var TERRSIZE=[];for(var tk=0;tk<12;tk++)TERRSIZE.push(0);for(var ci=1;ci<=N;ci++)TERRSIZE[CARD[ci].k]++;
+
+var I={
+ x:'<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>',
+ go:'<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>',
+ ok:'<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>',
+ no:'<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>',
+ flame:'<svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M12.4 2.2c.3 3.1-1.3 4.7-2.8 6.4C8.2 10.3 7 11.9 7 14.3 7 17.4 9.2 20 12 20s5-2.4 5-5.4c0-1.9-.8-3.3-1.7-4.5-.3 1-.9 1.8-1.7 2.2.3-3.7-.6-7.5-1.2-10.1z"/></svg>',
+ tab1:'<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"><path d="M2.5 19.5l6.5-11 3.5 6 2.5-4 7 9z"/></svg>',
+ tab2:'<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4.5"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3"/></svg>',
+ tab3:'<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><rect x="4" y="6" width="16" height="13" rx="2"/><path d="M7 3h10" stroke-linecap="round"/></svg>',
+ tab4:'<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h10M18 7h2M4 17h2M10 17h10"/><circle cx="16" cy="7" r="2"/><circle cx="8" cy="17" r="2"/></svg>',
+ redo:'<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12a8 8 0 1 0 3-6.2M4 4v4h4"/></svg>',
+ bolt:'<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"><path d="M13 2L5 14h6l-1 8 8-12h-6z"/></svg>',
+ doc:'<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round"><path d="M6 3h9l4 4v14H6zM14 3v5h5M9 13h7M9 17h7"/></svg>',
+ pin:'<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"><path d="M12 21s7-6.2 7-11.5A7 7 0 0 0 5 9.5C5 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg>'
+};
+
+/* ---------- helpers ---------- */
+function $(s){return document.querySelector(s)}
+function esc(s){return String(s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+function shuffle(a){a=a.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=a[i];a[i]=a[j];a[j]=t}return a}
+function today(){var d=new Date();return Math.floor(Date.UTC(d.getFullYear(),d.getMonth(),d.getDate())/864e5)}
+function dstr(n){return new Date(n*864e5).toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric',timeZone:'UTC'})}
+function iso(n){return new Date(n*864e5).toISOString().slice(0,10)}
+function fromIso(s){var p=String(s).split('-');if(p.length!==3)return null;var n=Math.floor(Date.UTC(+p[0],+p[1]-1,+p[2])/864e5);return isNaN(n)?null:n}
+function fm(n){return String(Math.round(n)).replace(/\B(?=(\d{3})+(?!\d))/g,'’')}
+function plural(n,w){return n+' '+w+(n===1?'':'s')}
+function inDays(d){var t=d-today();return t<=0?'today':(t===1?'tomorrow':'in '+t+' days')}
+
+/* ---------- state ---------- */
+function fresh(){var y=today()+365;return {v:1,u:0,c:{},days:{},xp:0,streak:0,last:0,best:0,ex:[],sp:0,ach:{},intro:0,tot:0,ok:0,set:{exam:iso(y),np:5,goal:20,think:true}}}
+function norm(o){var f=fresh();if(!o||typeof o!=='object')return f;o.set=Object.assign(f.set,o.set||{});['c','days','ach'].forEach(function(k){if(!o[k]||typeof o[k]!=='object')o[k]={}});if(!Array.isArray(o.ex))o.ex=[];['xp','streak','last','best','sp','intro','tot','ok','u'].forEach(function(k){if(typeof o[k]!=='number')o[k]=0});o.v=1;return o}
+var S;
+try{S=norm(JSON.parse(localStorage.getItem(KEY)))}catch(e){S=fresh()}
+var SES=null,PENDING=null,view='home',filt='all',query='',DBREF=null,remote='local',pushT=null,pushing=false,pushAgain=false;
+
+function C(id){var a=S.c[id];return a?{b:a[0],d:a[1],n:a[2],lap:a[3],ok:a[4],last:a[5]}:{b:0,d:0,n:0,lap:0,ok:0,last:0}}
+function setC(id,c){S.c[id]=[c.b,c.d,c.n,c.lap,c.ok,c.last]}
+function seenCount(){return Object.keys(S.c).length}
+function altitude(){var u=0;for(var k in S.c)u+=S.c[k][0];return A0+(u/(N*7))*(A1-A0)}
+function readiness(){var s=0;for(var k in S.c)s+=RDY[S.c[k][0]];return s/N}
+function dueList(){var t=today(),r=[];for(var id=1;id<=N;id++){var a=S.c[id];if(a&&a[1]<=t)r.push(id)}return r.sort(function(x,y){return S.c[x][1]-S.c[y][1]||S.c[x][0]-S.c[y][0]})}
+function unseenList(){var r=[];for(var id=1;id<=N;id++)if(!S.c[id])r.push(id);return r}
+function dayRec(t){return S.days[t]||(S.days[t]=[0,0,0])}
+function newToday(){return (S.days[today()]||[0,0,0])[2]}
+function answeredToday(){return (S.days[today()]||[0,0,0])[0]}
+function streakNow(){return S.last>=today()-2?S.streak:0}
+function terrStats(k){var n=0,solid=0,sum=0;for(var id=1;id<=N;id++){if(CARD[id].k!==k)continue;n++;var b=S.c[id]?S.c[id][0]:0;sum+=b;if(b>=4)solid++}return {n:n,solid:solid,avg:sum/(n*7),won:solid/n>=.8}}
+function mistakes(){var r=[];for(var id=1;id<=N;id++){var a=S.c[id];if(a&&a[3]>0&&a[0]<=3)r.push(id)}return r.sort(function(x,y){return S.c[y][3]-S.c[x][3]||S.c[x][0]-S.c[y][0]})}
+function stampsWon(){var n=0;for(var k=0;k<12;k++)if(terrStats(k).won)n++;return n}
+
+/* ---------- persistence ---------- */
+function save(){S.u=Date.now();try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}schedulePush()}
+function schedulePush(){if(!DBREF)return;clearTimeout(pushT);pushT=setTimeout(push,1200)}
+function push(){
+  if(!DBREF)return;
+  if(pushing){pushAgain=true;return}
+  pushing=true;
+  DBREF.set({v:1,state:S}).then(function(){remote='cloud'}).catch(function(){remote='error'}).then(function(){pushing=false;if(pushAgain){pushAgain=false;schedulePush()}})
+}
+function adopt(rs){S=norm(rs);try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}render()}
+function initRemote(){
+  if(!window.claude||!window.claude.use)return;
+  Promise.all([window.claude.use('db'),window.claude.use('user')]).then(function(r){
+    var db=r[0],user=r[1];if(!db||!user)return null;
+    return user.id().then(function(id){
+      if(!id)return null;
+      DBREF=db.doc('data/users/'+id+'/progress');
+      return DBREF.get().then(function(snap){
+        remote='cloud';
+        var rs=snap.exists&&snap.data()?snap.data().state:null;
+        if(rs&&typeof rs==='object'){
+          if((rs.u||0)>(S.u||0)){if(SES)PENDING=rs;else adopt(rs)}
+          else if((rs.u||0)<(S.u||0))push();
+        }else if(S.u)push();
+        if(!SES)render();
+      });
+    });
+  }).catch(function(){remote='local'});
+}
+
+/* ---------- toasts ---------- */
+function toast(m,ms){var t=document.createElement('div');t.className='toast';t.textContent=m;$('#toasts').appendChild(t);setTimeout(function(){t.remove()},ms||2600)}
+
+/* ---------- achievements ---------- */
+var ACH=[
+ ['first','First steps','Answer 10 cards',function(){return S.tot>=10}],
+ ['lausanne','Lausanne','Reach 495 m',function(){return altitude()>=495}],
+ ['leysin','Home village','Reach Leysin, 1’263 m',function(){return altitude()>=1263}],
+ ['berneuse','Kuklos','Reach la Berneuse',function(){return altitude()>=2048}],
+ ['streak7','Seven days','A 7-day streak',function(){return S.best>=7}],
+ ['streak30','Thirty days','A 30-day streak',function(){return S.best>=30}],
+ ['perfect','Clean sheet','10+ cards, no mistakes',function(){return !!S.ach.perfect}],
+ ['exam','Dress rehearsal','90%+ on a mock exam',function(){return S.ex.some(function(e){return e[2]&&e[1]/e[2]>=.9})}],
+ ['stamps','Passport','Earn 6 stamps',function(){return stampsWon()>=6}],
+ ['solid','Fifty solid','50 cards at strength 4+',function(){var n=0;for(var k in S.c)if(S.c[k][0]>=4)n++;return n>=50}]
+];
+function checkAch(){ACH.forEach(function(a){if(!S.ach[a[0]]&&a[3]()){S.ach[a[0]]=today();toast('Badge: '+a[1])}})}
+
+/* ---------- scheduling ---------- */
+function grade(id,res,ph,mode){
+  var c=C(id),t=today(),due=t>=c.d&&c.n>0;
+  c.n++;c.last=t;
+  if(res==='good'){
+    c.ok++;
+    if(ph==='new'){c.b=2}
+    else if(ph==='second'){if(!SES.failed[id]&&c.b<2)c.b=2}
+    else if(ph==='retry'||ph==='sprint'){}
+    else if(ph==='exam'){if(c.b===0)c.b=2}
+    else if(due){c.b=Math.min(7,Math.max(2,c.b+1))}
+  }else{
+    c.lap++;
+    c.b=(ph==='new'||c.b<=1)?1:Math.max(1,Math.floor(c.b/2));
+  }
+  c.d=t+INT[c.b];
+  setC(id,c);
+  return c;
+}
+function bumpDay(id,res,ph){
+  var r=dayRec(today());r[0]++;S.tot++;if(res==='good'){r[1]++;S.ok++}if(ph==='new')r[2]++;
+  if(r[0]===10){var t=today();if(S.last!==t){S.streak=(S.last>=t-2&&S.last>0)?S.streak+1:1;S.last=t;if(S.streak>S.best)S.best=S.streak;if(S.streak>1)toast(S.streak+'-day streak')}}
+  if(r[0]===S.set.goal)toast('Daily goal reached');
+}
+
+/* ---------- session builders ---------- */
+function weave(rev,nw){
+  var out=rev.slice();
+  nw.forEach(function(it,i){var pos=Math.round((i+1)*(rev.length+nw.length)/(nw.length+1));pos=Math.max(Math.min(2,out.length),Math.min(pos,out.length));out.splice(pos,0,it)});
+  return out;
+}
+function build(mode,opt){
+  var q=[],i;
+  if(mode==='daily'){
+    var due=shuffle(dueList().slice(0,40)).map(function(id){return {id:id,ph:'review'}});
+    var left=opt&&opt.extra?5:Math.max(0,S.set.np-newToday());
+    var nw=unseenList().slice(0,left).map(function(id){return {id:id,ph:'new'}});
+    q=weave(due,nw);
+  }else if(mode==='mistakes'){
+    q=shuffle(mistakes().slice(0,12)).map(function(id){return {id:id,ph:'review'}});
+  }else if(mode==='terr'){
+    var k=opt.k,t=today(),pool=[];
+    for(i=1;i<=N;i++)if(CARD[i].k===k)pool.push(i);
+    var seen=pool.filter(function(id){return S.c[id]}),un=pool.filter(function(id){return !S.c[id]});
+    var dueIds=seen.filter(function(id){return S.c[id][1]<=t});
+    var weak=seen.filter(function(id){return S.c[id][1]>t}).sort(function(a,b){return S.c[a][0]-S.c[b][0]});
+    var ids=dueIds.slice(0,10).concat(un.slice(0,6));
+    weak.forEach(function(id){if(ids.length<12)ids.push(id)});
+    if(!ids.length)ids=shuffle(pool).slice(0,10);
+    var rev=shuffle(ids.filter(function(id){return S.c[id]})).map(function(id){return {id:id,ph:'review'}});
+    var nn=ids.filter(function(id){return !S.c[id]}).map(function(id){return {id:id,ph:'new'}});
+    q=weave(rev,nn);
+  }else if(mode==='exam'){
+    q=shuffle(Object.keys(CARD).map(Number)).slice(0,40).map(function(id){return {id:id,ph:'exam'}});
+  }else if(mode==='sprint'){
+    var pool2=Object.keys(S.c).map(Number);
+    q=shuffle(pool2).map(function(id){return {id:id,ph:'sprint'}});
+  }
+  return q;
+}
+function startSession(mode,opt){
+  var q=build(mode,opt);
+  if(mode==='sprint'&&q.length<8){toast('Learn at least 8 cards first, then sprint');return}
+  if(!q.length){toast(mode==='mistakes'?'No weak cards right now':'Nothing to practise here yet');return}
+  SES={mode:mode,opt:opt||{},queue:q,pool:mode==='sprint'?q.slice():null,done:0,ok:0,bad:0,idk:0,newSeen:0,failed:{},loops:{},combo:0,best:0,xp:0,alt0:altitude(),stage:'ask',cur:null,order:[],locked:true,res:null,exam:[],wrong:[],left:60000,score:0,t0:Date.now(),timer:null,lastState:null};
+  if(mode==='sprint'){SES.end=Date.now()+60000;SES.timer=setInterval(tickSprint,120)}
+  nextCard();
+}
+function nextCard(){
+  var s=SES;
+  if(s.mode==='sprint'){if(Date.now()>=s.end){return endSession()}if(!s.queue.length)s.queue=shuffle(s.pool);}
+  if(!s.queue.length)return endSession();
+  s.cur=s.queue[0];
+  var c=CARD[s.cur.id];
+  s.order=shuffle([0,1,2,3]);
+  s.res=null;s.locked=true;
+  var cs=C(s.cur.id);
+  s.stage=(S.set.think&&s.cur.ph==='review'&&cs.b>=2)?'think':'ask';
+  render();
+}
+function tickSprint(){
+  var s=SES;if(!s||s.mode!=='sprint'||s.stage==='done'){return}
+  var left=s.end-Date.now();
+  if(left<=0){clearInterval(s.timer);s.timer=null;if(s.stage==='ask'||s.stage==='fb'){endSession()}return}
+  var el=$('#tbar');if(el){el.style.width=Math.max(0,left/600)+'%';el.parentNode.classList.toggle('low',left<10000)}
+}
+function ins(x,pos){SES.queue.splice(Math.min(pos,SES.queue.length),0,x)}
+function answer(i){
+  var s=SES;if(!s||(s.stage!=='ask'&&s.stage!=='think'))return;
+  var it=s.queue.shift(),card=CARD[it.id],res;
+  if(i<0)res='idk';else res=(s.order[i]===card.a)?'good':'bad';
+  var before=altitude(),ph=it.ph;
+  var cs=grade(it.id,res,ph,s.mode);
+  bumpDay(it.id,res,ph);
+  s.done++;
+  if(res==='good'){s.ok++;s.combo++;if(s.combo>s.best)s.best=s.combo;var m=s.combo>=10?2:(s.combo>=5?1.5:1);s.xp+=Math.round(10*m);S.xp+=Math.round(10*m)}
+  else{s.bad++;if(res==='idk')s.idk++;if(res==='bad')s.combo=0;s.wrong.push(it.id)}
+  if(ph==='new')s.newSeen++;
+  var L=s.loops;
+  if(s.mode==='exam'){s.exam.push({id:it.id,res:res});save();return nextCard()}
+  if(s.mode==='sprint'){
+    if(res==='good'){s.score++;s.end+=0}else{s.end-=3000}
+    s.res=res;s.stage='fb';s.locked=true;s.chosen=i;save();render();
+    setTimeout(function(){if(SES===s&&s.stage==='fb'){nextCard()}},res==='good'?260:1150);
+    return;
+  }
+  if(ph==='new'){if(res!=='good')s.failed[it.id]=1;ins({id:it.id,ph:'second'},5)}
+  else if(ph==='second'){if(res!=='good'){s.failed[it.id]=1;L[it.id]=(L[it.id]||0)+1;ins({id:it.id,ph:'retry',k:1},3)}}
+  else if(ph==='review'){if(res!=='good'){s.failed[it.id]=1;ins({id:it.id,ph:'retry',k:1},3)}}
+  else if(ph==='retry'){
+    if(res==='good'){if(it.k<2)ins({id:it.id,ph:'retry',k:it.k+1},6)}
+    else{L[it.id]=(L[it.id]||0)+1;if(L[it.id]<4)ins({id:it.id,ph:'retry',k:1},3)}
+  }
+  s.res=res;s.chosen=i;s.stage='fb';s.locked=(res==='good');s.lastState=cs;
+  var after=altitude();
+  s.crossed=WP.filter(function(w){return before<w.a&&after>=w.a});
+  save();render();
+}
+function lockIn(){var s=SES;if(s&&s.stage==='fb'&&!s.locked){s.locked=true;render()}}
+function cont(){
+  var s=SES;if(!s||s.stage!=='fb'||!s.locked||s.mode==='sprint')return;
+  if(s.crossed&&s.crossed.length){var w=s.crossed[s.crossed.length-1];toast('Arrivé à '+w.n+' · '+fm(w.a)+' m',3200);s.crossed=[]}
+  nextCard();
+}
+function quit(){
+  var s=SES;if(!s)return;
+  if(s.timer){clearInterval(s.timer);s.timer=null}
+  if(s.done>0&&s.stage!=='done'){return endSession()}
+  SES=null;if(PENDING){var p=PENDING;PENDING=null;if((p.u||0)>(S.u||0)){adopt(p);return}}
+  render();
+}
+function endSession(){
+  var s=SES;if(s.timer){clearInterval(s.timer);s.timer=null}
+  s.stage='done';s.alt1=altitude();
+  if(s.mode==='exam'){var g=s.exam.filter(function(e){return e.res==='good'}).length;S.ex.push([today(),g,s.exam.length]);S.ex=S.ex.slice(-12)}
+  if(s.mode==='sprint'){S.sp=Math.max(S.sp,s.score)}
+  if((s.mode==='daily'||s.mode==='terr')&&s.done>=10&&s.bad===0)S.ach.perfect=today();
+  checkAch();save();render();
+}
+function done(){SES=null;if(PENDING){var p=PENDING;PENDING=null;if((p.u||0)>(S.u||0)){adopt(p);return}}render()}
+
+/* ---------- svg bits ---------- */
+function contours(){
+  var w=360,h=240,p='';
+  for(var k=0;k<10;k++){var d='M0 '+(14+k*24);for(var x=0;x<=w;x+=12){d+=' L'+x+' '+(14+k*24+Math.sin(x/58+k*.7)*9+Math.cos(x/31+k)*4).toFixed(1)}p+='<path vector-effect="non-scaling-stroke" d="'+d+'"/>'}
+  return '<svg class="contours" viewBox="0 0 '+w+' '+h+'" preserveAspectRatio="none" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1">'+p+'</svg>';
+}
+function profile(alt){
+  var W=340,H=132,px=16,py=14,base=H-38,n=WP.length;
+  function X(i){return px+i*(W-2*px)/(n-1)}
+  function Y(a){return base-(a-A0)/(A1-A0)*(base-py)}
+  var pts=WP.map(function(w,i){return [X(i),Y(w.a)]});
+  var sg=0;while(sg<n-2&&alt>=WP[sg+1].a)sg++;
+  var t=Math.min(1,Math.max(0,(alt-WP[sg].a)/(WP[sg+1].a-WP[sg].a)));
+  var pin=[pts[sg][0]+(pts[sg+1][0]-pts[sg][0])*t,pts[sg][1]+(pts[sg+1][1]-pts[sg][1])*t];
+  var dn=pts.slice(0,sg+1).concat([pin]);
+  function pl(a){return a.map(function(p){return p[0].toFixed(1)+','+p[1].toFixed(1)}).join(' ')}
+  var area=pl(dn)+' '+pin[0].toFixed(1)+','+base+' '+pts[0][0].toFixed(1)+','+base;
+  var s='<svg class="profile" viewBox="0 0 '+W+' '+H+'" role="img" aria-label="Altitude profile from Lac Léman to the Pointe Dufour, currently at '+Math.round(alt)+' metres">';
+  s+='<line x1="'+px+'" x2="'+(W-px)+'" y1="'+base+'" y2="'+base+'" stroke="var(--line)" stroke-width="1"/>';
+  s+='<polyline points="'+pl(pts)+'" fill="none" stroke="var(--line)" stroke-width="2.5" stroke-dasharray="2 5" stroke-linecap="round" stroke-linejoin="round"/>';
+  s+='<polygon points="'+area+'" fill="var(--accent-soft)"/>';
+  s+='<polyline points="'+pl(dn)+'" fill="none" stroke="var(--accent)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>';
+  WP.forEach(function(w,i){
+    var on=alt>=w.a;
+    s+='<circle cx="'+pts[i][0].toFixed(1)+'" cy="'+pts[i][1].toFixed(1)+'" r="4" fill="'+(on?'var(--accent)':'var(--surface)')+'" stroke="'+(on?'var(--accent)':'var(--muted)')+'" stroke-width="1.6"/>';
+    s+='<text class="wl'+(on?' on':'')+'" x="'+pts[i][0].toFixed(1)+'" y="'+(base+13+(i%2)*13)+'" text-anchor="middle">'+w.s+'</text>';
+  });
+  s+='<circle cx="'+pin[0].toFixed(1)+'" cy="'+pin[1].toFixed(1)+'" r="7" fill="var(--accent)" stroke="var(--surface)" stroke-width="3"/>';
+  return s+'</svg>';
+}
+function ringSVG(f){var r=10,c=2*Math.PI*r;return '<svg class="ring" viewBox="0 0 28 28" aria-hidden="true"><circle class="bg" cx="14" cy="14" r="'+r+'"/><circle class="fg" cx="14" cy="14" r="'+r+'" stroke-dasharray="'+(c*Math.min(1,f)).toFixed(1)+' '+c.toFixed(1)+'"/></svg>'}
+function strength(b){var s='<span class="str" aria-label="Memory strength '+b+' of 7">';for(var i=1;i<=7;i++)s+='<i'+(i<=b?' class="on"':'')+'></i>';return s+'</span>'}
+
+/* ---------- views ---------- */
+function render(){
+  var app=$('#app'),tb=$('#tabbar');
+  if(SES){tb.innerHTML='';app.innerHTML=SES.stage==='done'?summaryHTML():sessionHTML();afterSession();return}
+  tb.innerHTML=tabsHTML();
+  app.innerHTML=view==='home'?homeHTML():view==='map'?mapHTML():view==='cards'?cardsHTML():moreHTML();
+  if(view==='cards')renderList();
+  window.scrollTo(0,0);
+}
+function tabsHTML(){
+  var t=[['home','Climb',I.tab1],['map','Map',I.tab2],['cards','Cards',I.tab3],['more','More',I.tab4]];
+  return '<nav class="tabs" aria-label="Sections"><div>'+t.map(function(x){return '<button class="tab" data-a="tab" data-v="'+x[0]+'"'+(view===x[0]?' aria-current="page"':'')+'>'+x[2]+'<span>'+x[1]+'</span></button>'}).join('')+'</div></nav>';
+}
+function homeHTML(){
+  var alt=altitude(),sg=0;while(sg<WP.length-1&&alt>=WP[sg+1].a)sg++;
+  var nxt=WP[sg+1],zone=WP[sg];
+  var due=dueList().length,left=Math.max(0,S.set.np-newToday()),un=unseenList().length,nw=Math.min(left,un);
+  var rv=Math.min(due,40),goal=S.set.goal,ans=answeredToday();
+  var days=fromIso(S.set.exam)!==null?fromIso(S.set.exam)-today():null;
+  var cta,sub;
+  if(rv+nw>0){cta='Start today’s climb';sub=plural(rv,'review')+' · '+nw+' new'}
+  else if(un>0){cta='Bonus round';sub='5 more new cards'}
+  else{cta='Free practice';sub='Nothing due. Strengthen the weakest cards'}
+  var h='<header class="top"><h1>Du Léman à la Dufour</h1>'+(days!==null?'<span class="pill">'+(days>0?days+' days to go':'Exam day')+'</span>':'')+'</header>';
+  h+='<section class="hero" aria-label="Your altitude">'+contours()+'<div class="eyebrow">Altitude, what you really know</div><div class="alt"><span>'+fm(alt)+'</span><small>m</small></div>';
+  h+='<p class="zone">'+(nxt?'Now at <b>'+esc(zone.n)+'</b> zone. <b>'+fm(nxt.a-alt)+' m</b> to '+esc(nxt.n)+'.':'<b>Summit reached.</b> Keep it alive with reviews.')+'</p>'+profile(alt)+'</section>';
+  if(!S.intro&&seenCount()===0){
+    h+='<section class="intro"><h2>How this works</h2><ol><li>Each day you meet a few new questions. Try to answer before you see the hook.</li><li>Wrong answers come back within minutes, then days later, then weeks.</li><li>Every card you truly know lifts your altitude. Dufour means all 160 are solid.</li></ol><button class="btn block" data-a="intro">Got it</button></section>';
+  }
+  h+='<div class="stats"><div class="stat"><div class="v" style="color:'+(streakNow()?'var(--amber)':'var(--muted)')+'">'+I.flame+'<span style="color:var(--ink)">'+streakNow()+'</span></div><div class="l">day streak</div></div>';
+  h+='<div class="stat"><div class="v">'+ringSVG(ans/goal)+'<span>'+ans+'</span></div><div class="l">of '+goal+' today</div></div>';
+  h+='<div class="stat"><div class="v">'+Math.round(readiness()*100)+'<span style="font-size:14px;color:var(--muted)">%</span></div><div class="l">exam ready</div></div></div>';
+  h+='<button class="cta" data-a="daily"><div><b>'+cta+'</b><span>'+sub+'</span></div>'+I.go+'</button>';
+  h+='<section class="sec"><h2>Other ways to train</h2>';
+  var mk=mistakes().length;
+  h+=row('mistakes',I.redo,'Mistakes','Cards you have missed and not yet fixed',mk);
+  h+=row('sprint',I.bolt,'Sprint 60','60 seconds, wrong answers cost 3 seconds',S.sp?'best '+S.sp:'');
+  h+=row('exam',I.doc,'Mock exam','40 random questions, no hints until the end',S.ex.length?'best '+Math.round(Math.max.apply(null,S.ex.map(function(e){return e[1]/e[2]}))*100)+'%':'');
+  h+=row('tab',I.pin,'By territory','Pick Géographie, Histoire, Politique or Social',''  ).replace('data-a="tab"','data-a="tab" data-v="map"');
+  h+='</section>';
+  h+='<section class="sec"><h2>Pace</h2><div class="note">';
+  if(un>0){var dd=Math.ceil(un/Math.max(1,S.set.np));h+='At <b>'+S.set.np+' new cards a day</b> you will have met all 160 by <b>'+dstr(today()+dd)+'</b>. After that it is about 5 to 10 minutes of review a day.'}
+  else{h+='You have met every card. From here on it is review only, about 5 to 10 minutes a day, until <b>'+(days!==null?dstr(fromIso(S.set.exam)):'exam day')+'</b>.'}
+  h+='</div>';
+  var fl=QUESTIONS.filter(function(r){return r[5]}).length;
+  h+='<div class="note amber" style="margin-top:10px"><b>'+fl+' answers can change before your test.</b> All 160 answers match the official answer key. These '+fl+' name office holders, so re-check them a week before the exam. <button class="btn" style="margin-top:8px;padding:8px 12px" data-a="flagged">See them</button></div></section>';
+  return h;
+}
+function row(a,ic,t,s,n){return '<button class="row" data-a="'+a+'"><span class="ic">'+ic+'</span><span class="t"><b>'+t+'</b><span>'+s+'</span></span><span class="n">'+n+'</span></button>'}
+
+function mapHTML(){
+  var h='<header class="top"><h1>Territoires</h1></header>';
+  h+='<p class="muted" style="margin:2px 0 12px">Tap a stamp to practise that territory. A stamp is earned when 80% of its cards reach strength 4.</p>';
+  h+='<div class="terr"><span></span>'+LEVS.map(function(l){return '<span class="h">'+l+'</span>'}).join('');
+  for(var s=0;s<4;s++){
+    h+='<span class="rl">'+SECT[s]+'</span>';
+    for(var l=0;l<3;l++){
+      var k=s*3+l,t=terrStats(k),c=2*Math.PI*24;
+      h+='<button class="stamp'+(t.won?' won':'')+'" data-a="terr" data-k="'+k+'" aria-label="'+SECT[s]+' '+LEVS[l]+': '+t.solid+' of '+t.n+' solid'+(t.won?', stamp earned':'')+'"><svg viewBox="0 0 56 56"><circle class="in" cx="28" cy="28" r="22" fill="none"/><circle class="bg" cx="28" cy="28" r="24"/><circle class="fg" cx="28" cy="28" r="24" stroke-dasharray="'+(c*t.avg).toFixed(1)+' '+c.toFixed(1)+'"/>'+(t.won?'<path d="M18 29l7 7 13-14" fill="none" stroke="var(--accent)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>':'<text class="tx" x="28" y="32">'+t.solid+'/'+t.n+'</text>')+'</svg><span class="c">'+(t.won?'stamp':'solid')+'</span></button>';
+    }
+  }
+  h+='</div>';
+  var g=[0,0,0,0,0];
+  for(var id=1;id<=N;id++){var b=S.c[id]?S.c[id][0]:0;g[b===0?0:b<=2?1:b===3?2:b<=5?3:4]++}
+  /* groups: new, learning(1-2), building(3), solid(4-5), mastered(6-7) */
+  h+='<section class="sec"><h2>Memory strength</h2><div class="bar" role="img" aria-label="Cards by memory strength">';
+  var cls=['c0','c1','c2','c3','c4'];g.forEach(function(v,i){if(v)h+='<i class="'+cls[i]+'" style="width:'+(v/N*100)+'%"></i>'});
+  h+='</div><div class="legend">'+['New','Learning','Building','Solid','Mastered'].map(function(n,i){return '<span><i class="'+cls[i]+'"></i>'+n+' '+g[i]+'</span>'}).join('')+'</div></section>';
+  var alt=altitude();
+  h+='<section class="sec"><h2>Itinéraire</h2><ul class="ladder">';
+  var nextIdx=-1;WP.forEach(function(w,i){if(nextIdx<0&&alt<w.a)nextIdx=i});
+  WP.slice().reverse().forEach(function(w){var i=WP.indexOf(w);h+='<li class="'+(alt>=w.a?'on':(i===nextIdx?'next':''))+'"><span class="m">'+fm(w.a)+' m</span><span class="d"></span><span><b style="font-weight:700">'+esc(w.n)+'</b><small>'+esc(w.t)+'</small></span></li>'});
+  h+='</ul></section>';
+  h+='<section class="sec"><h2>Badges</h2><div class="badges">'+ACH.map(function(a){var got=!!S.ach[a[0]];return '<div class="badge'+(got?' got':'')+'"><b>'+a[1]+'</b><span>'+a[2]+'</span></div>'}).join('')+'</div></section>';
+  var acc=S.tot?Math.round(S.ok/S.tot*100):0;
+  h+='<section class="sec"><h2>Totals</h2><div class="note">'+plural(S.tot,'answer')+' so far, <b>'+acc+'%</b> correct. Best streak <b>'+S.best+'</b> days. '+(S.ex.length?'Last mock exam: <b>'+Math.round(S.ex[S.ex.length-1][1]/S.ex[S.ex.length-1][2]*100)+'%</b>.':'No mock exam yet.')+'</div></section>';
+  return h;
+}
+
+function cardsHTML(){
+  var f=[['all','All'],['new','Not met'],['learn','Learning'],['solid','Solid'],['miss','Mistakes'],['doubt','May change']];
+  var h='<header class="top"><h1>Cartes</h1><span class="pill" id="ccount"></span></header>';
+  h+='<input class="field" id="search" type="search" placeholder="Search questions" aria-label="Search questions" value="'+esc(query)+'">';
+  h+='<div class="chips" role="group" aria-label="Filter">'+f.map(function(x){return '<button class="chip" data-a="filt" data-f="'+x[0]+'" aria-pressed="'+(filt===x[0])+'">'+x[1]+'</button>'}).join('')+'</div>';
+  h+='<div class="clist" id="clist"></div>';
+  return h;
+}
+function renderList(){
+  var el=$('#clist');if(!el)return;
+  var ql=query.toLowerCase(),out=[],n=0;
+  QUESTIONS.forEach(function(r){
+    var id=r[0],cs=C(id),inS=!!S.c[id],ok=true;
+    if(filt==='new')ok=!inS;else if(filt==='learn')ok=inS&&cs.b<4;else if(filt==='solid')ok=cs.b>=4;else if(filt==='miss')ok=cs.lap>0&&cs.b<=3;else if(filt==='doubt')ok=!!r[5];
+    if(ok&&ql){ok=(r[1]+' '+r[2].join(' ')).toLowerCase().indexOf(ql)>=0}
+    if(!ok)return;n++;
+    var bx='<span class="bx" aria-hidden="true">';for(var i=1;i<=7;i++)bx+='<i'+(i<=cs.b?' class="on"':'')+'></i>';bx+='</span>';
+    out.push('<details><summary><span class="id">'+id+'</span><span class="q">'+esc(r[1])+'</span>'+bx+'</summary><div class="det"><div class="ans">'+esc(r[2][r[3]])+'</div><ul>'+r[2].map(function(o,j){return j===r[3]?'':'<li>'+esc(o)+'</li>'}).join('')+'</ul><p>'+esc(r[4])+'</p>'+(r[5]?'<div class="note amber small" style="margin-top:8px">'+esc(r[5])+'</div>':'')+'<p class="muted small" style="margin-top:8px">'+SECT[CARD[id].s]+' · '+LEVS[CARD[id].l]+(inS?' · next review '+inDays(cs.d):' · not met yet')+'</p></div></details>');
+  });
+  el.innerHTML=out.join('')||'<p class="muted" style="padding:20px 2px">No cards match.</p>';
+  var cc=$('#ccount');if(cc)cc.textContent=n+' / '+N;
+}
+function moreHTML(){
+  var st=remote==='cloud'?'Progress is saved to your Claude account and on this device.':(remote==='error'?'Could not reach your account just now. Progress is saved on this device.':'Progress is saved on this device only. Use the backup below if you change phone or browser.');
+  var h='<header class="top"><h1>Réglages</h1></header>';
+  h+='<div class="note">'+st+'</div>';
+  h+='<section class="sec"><h2>Plan</h2>';
+  h+='<div class="set"><label for="s-exam"><b>Test date</b><span>Used for the countdown and pace.</span></label><input id="s-exam" type="date" value="'+esc(S.set.exam)+'"></div>';
+  h+='<div class="set"><label for="s-np"><b>New cards a day</b><span>Fewer is easier to keep up for a year.</span></label><select id="s-np">'+[3,5,8,12].map(function(v){return '<option'+(S.set.np===v?' selected':'')+'>'+v+'</option>'}).join('')+'</select></div>';
+  h+='<div class="set"><label for="s-goal"><b>Daily goal</b><span>Answers per day. 10 keeps your streak alive.</span></label><select id="s-goal">'+[10,20,30,50].map(function(v){return '<option'+(S.set.goal===v?' selected':'')+'>'+v+'</option>'}).join('')+'</select></div>';
+  h+='<div class="set"><label for="s-think"><b>Think first</b><span>For cards you know, answer in your head before seeing the choices. Slower, and it sticks better.</span></label><span class="sw"><input id="s-think" type="checkbox"'+(S.set.think?' checked':'')+'><i></i></span></div></section>';
+  h+='<section class="sec"><h2>Why it works</h2><ol class="why"><li><b>Retrieval.</b> Trying to answer, even wrongly, teaches more than rereading.</li><li><b>Spacing.</b> Cards return after 1, 2, 4, 8, 16, 35 and 70 days, just as you are about to forget.</li><li><b>Correction.</b> A miss returns within minutes and again later, and you tap the right answer to lock it in.</li><li><b>Mixing.</b> Reviews shuffle all topics, so you learn to tell similar facts apart.</li></ol></section>';
+  h+='<section class="sec"><h2>Backup</h2><p class="muted small" style="margin-bottom:8px">Copy this text somewhere safe. Paste it back here to restore.</p><textarea class="field" id="bk" aria-label="Backup text" spellcheck="false"></textarea><div style="display:flex;gap:8px;margin-top:8px;flex-wrap:wrap"><button class="btn" data-a="bkcopy">Copy backup</button><button class="btn" data-a="bkload">Restore from text</button></div></section>';
+  h+='<section class="sec"><h2>Reset</h2><div id="rs"><button class="btn warn" data-a="rs1">Erase all progress</button></div></section>';
+  return h;
+}
+
+/* ---- session views ---- */
+function chipsHTML(){
+  var s=SES,it=s.cur,card=CARD[it.id],cs=C(it.id),h='<div class="meta"><span class="tag">'+SECT[card.s]+' · '+LEVS[card.l]+'</span>';
+  if(it.ph==='new')h+='<span class="tag new">New</span>';
+  else if(it.ph==='retry')h+='<span class="tag retry">Again</span>';
+  else if(it.ph==='second')h+='<span class="tag new">Quick check</span>';
+  if(s.mode!=='exam'&&s.mode!=='sprint')h+=strength(cs.b);
+  return h+'</div>';
+}
+function sessionHTML(){
+  var s=SES,it=s.cur,card=CARD[it.id],h='';
+  var pct=Math.round(s.done/(s.done+s.queue.length+(s.stage==='fb'?0:0))*100)||0;
+  var combo='<span class="combo'+(s.combo>=5?' hot':'')+'">'+(s.mode==='sprint'?s.score+' pts':(s.combo>=2?'×'+s.combo:''))+'</span>';
+  var prog=s.mode==='sprint'?'<div class="prog time"><i id="tbar" style="width:'+Math.max(0,(s.end-Date.now())/600)+'%"></i></div>':'<div class="prog"><i style="width:'+pct+'%"></i></div>';
+  h+='<div class="sbar"><button class="x" data-a="quit" aria-label="End session">'+I.x+'</button>'+prog+combo+'</div>';
+  h+=chipsHTML();
+  var shake=(s.stage==='fb'&&s.res==='bad')?' shake':'';
+  h+='<div class="qcard'+shake+'"><div class="qt">'+esc(card.q)+'</div>';
+  if(s.mode==='exam')h+='<div class="nb">Question '+(s.done+1)+' of '+(s.done+s.queue.length)+'</div>';
+  h+='</div>';
+  if(s.stage==='think'){
+    h+='<div class="think"><b>Answer in your head</b>Say it out loud if you can. Then check.</div>';
+    h+='<div class="dock"><div><button class="btn pri block" data-a="show">Show choices</button></div></div>';
+    return h;
+  }
+  h+='<div class="opts" role="group" aria-label="Choices">';
+  var fb=s.stage==='fb';
+  s.order.forEach(function(oi,i){
+    var cls='opt',dis='';
+    if(fb){
+      dis=' disabled';
+      var right=(oi===card.a),chosen=(s.chosen===i);
+      if(right){cls+=' ok';if(!s.locked){cls+=' pulse';dis=''}}
+      else if(chosen){cls+=' no'}
+      else cls+=' dim';
+    }
+    h+='<button class="'+cls+'" data-a="'+(fb?'lock':'ans')+'" data-i="'+i+'"'+dis+'><span class="k">'+'ABCD'[i]+'</span><span>'+esc(card.o[oi])+'</span></button>';
+  });
+  h+='</div>';
+  if(!fb){
+    h+='<button class="idk" data-a="idk">'+(s.mode==='exam'?'Skip':'I don’t know yet')+'</button>';
+    return h;
+  }
+  if(s.mode==='sprint')return h;
+  var ban=s.res==='good'?'<div class="banner ok">'+I.ok+'Correct</div>':(s.res==='idk'?'<div class="banner sk">Now you know it</div>':'<div class="banner no">'+I.no+'Not quite</div>');
+  h+=ban;
+  if(!s.locked)h+='<p class="muted" style="margin:4px 0 0">Tap the right answer to lock it in.</p>';
+  h+='<div class="hook"><div class="eyebrow">Memory hook</div>'+esc(card.h)+'</div>';
+  if(card.f)h+='<div class="note amber small" style="margin-top:10px"><b>May change.</b> '+esc(card.f)+'</div>';
+  var c=C(it.id);
+  if(s.locked){
+    var cap=(s.res==='good')?(it.ph==='retry'||it.ph==='second'?'Good. One more pass later.':'Next review '+inDays(c.d)+'.'):'This one comes back in a few cards.';
+    h+='<p class="next">'+cap+'</p>';
+  }
+  h+='<div class="dock"><div><button class="btn pri block" data-a="next"'+(s.locked?'':' disabled')+'>Continue</button></div></div>';
+  return h;
+}
+function afterSession(){
+  var s=SES;if(!s)return;
+  if(s.stage==='done'){window.scrollTo(0,0);countUp();return}
+  var bn=document.querySelector('.banner');
+  if(s.stage==='fb'&&bn&&s.mode!=='sprint'){try{bn.scrollIntoView({block:'center'})}catch(x){}}
+  else window.scrollTo(0,0);
+  var b=document.querySelector('[data-a="next"]');if(b&&!b.disabled)b.focus({preventScroll:true});
+}
+function summaryHTML(){
+  var s=SES,g=Math.round(s.alt1-s.alt0),h='';
+  var acc=s.done?Math.round(s.ok/s.done*100):0;
+  h+='<header class="top"><h1>'+(s.mode==='exam'?'Mock exam':s.mode==='sprint'?'Sprint 60':'Session done')+'</h1></header>';
+  if(s.mode==='exam'){
+    var gd=s.exam.filter(function(e){return e.res==='good'}).length,tt=s.exam.length;
+    h+='<div class="sum">'+contours()+'<div class="eyebrow">Score</div><div class="gain" style="color:var(--ink)">'+Math.round(gd/tt*100)+'<span style="font-size:.4em">%</span></div><div class="sub">'+gd+' of '+tt+' correct</div></div>';
+    var bys=[0,0,0,0],byn=[0,0,0,0];s.exam.forEach(function(e){var x=CARD[e.id].s;byn[x]++;if(e.res==='good')bys[x]++});
+    h+='<section class="sec"><h2>By subject</h2><div class="bars">'+SECT.map(function(n,i){var p=byn[i]?Math.round(bys[i]/byn[i]*100):0;return '<div><span>'+n+'</span><span class="bg"><i style="width:'+p+'%"></i></span><em>'+(byn[i]?p+'%':'–')+'</em></div>'}).join('')+'</div></section>';
+  }else if(s.mode==='sprint'){
+    h+='<div class="sum">'+contours()+'<div class="eyebrow">Points</div><div class="gain">'+s.score+'</div><div class="sub">Best '+S.sp+(s.score>=S.sp&&s.score>0?' · new record':'')+'</div></div>';
+  }else{
+    h+='<div class="sum">'+contours()+'<div class="eyebrow">Altitude gained</div><div class="gain" style="color:'+(g<0?'var(--red)':'var(--accent)')+'"><span id="gainv" data-to="'+g+'">'+(g>0?'+':'')+'0</span><span style="font-size:.35em;color:var(--muted)"> m</span></div><div class="sub">'+fm(s.alt0)+' m → '+fm(s.alt1)+' m</div>'+profile(s.alt1)+'</div>';
+  }
+  h+='<div class="grid3"><div><b>'+acc+'%</b><span>correct</span></div><div><b>'+s.newSeen+'</b><span>new cards</span></div><div><b>+'+s.xp+'</b><span>points</span></div></div>';
+  if(s.mode!=='sprint'){
+    var seen={},w=[];s.wrong.forEach(function(id){if(!seen[id]){seen[id]=1;w.push(id)}});
+    if(w.length){h+='<section class="sec"><h2>To look at again ('+w.length+')</h2><div class="miss">'+w.map(function(id){var c=CARD[id];return '<div><b>'+esc(c.q)+'</b><span>'+esc(c.o[c.a])+'</span></div>'}).join('')+'</div></section>'}
+  }
+  h+='<div class="dock"><div style="display:grid;gap:8px"><button class="btn pri block" data-a="done">Back to base</button></div></div>';
+  return h;
+}
+function countUp(){
+  var el=$('#gainv');if(!el)return;
+  var to=+el.getAttribute('data-to'),t0=performance.now(),dur=900;
+  if(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches){el.textContent=(to>0?'+':'')+to;return}
+  (function f(now){var p=Math.min(1,(now-t0)/dur),e=1-Math.pow(1-p,3),v=Math.round(to*e);el.textContent=(to>0?'+':'')+v;if(p<1&&document.body.contains(el))requestAnimationFrame(f)})(t0);
+}
+
+/* ---------- events ---------- */
+document.addEventListener('click',function(e){
+  var el=e.target.closest('[data-a]');if(!el)return;
+  var a=el.getAttribute('data-a');
+  switch(a){
+    case 'tab':view=el.getAttribute('data-v');render();break;
+    case 'intro':S.intro=1;save();render();break;
+    case 'daily':startSession('daily',{extra:(Math.min(dueList().length,40)+Math.max(0,S.set.np-newToday())===0&&unseenList().length>0)});
+      if(!SES&&dueList().length===0&&unseenList().length===0){startSession('terr',{k:weakestTerr()})}break;
+    case 'mistakes':startSession('mistakes');break;
+    case 'sprint':startSession('sprint');break;
+    case 'exam':startSession('exam');break;
+    case 'terr':startSession('terr',{k:+el.getAttribute('data-k')});break;
+    case 'flagged':view='cards';filt='doubt';query='';render();break;
+    case 'filt':filt=el.getAttribute('data-f');document.querySelectorAll('.chip').forEach(function(c){c.setAttribute('aria-pressed',String(c.getAttribute('data-f')===filt))});renderList();break;
+    case 'ans':answer(+el.getAttribute('data-i'));break;
+    case 'idk':answer(-1);break;
+    case 'show':if(SES&&SES.stage==='think'){SES.stage='ask';render()}break;
+    case 'lock':lockIn();break;
+    case 'next':cont();break;
+    case 'quit':quit();break;
+    case 'done':done();break;
+    case 'bkcopy':
+      var ta=$('#bk');ta.value=JSON.stringify(S);ta.select();
+      try{navigator.clipboard.writeText(ta.value).then(function(){toast('Backup copied')}).catch(function(){toast('Select the text and copy it')})}catch(x){toast('Select the text and copy it')}
+      break;
+    case 'bkload':
+      try{var o=JSON.parse($('#bk').value);if(!o||typeof o!=='object'||!o.c||!o.set)throw 0;S=norm(o);save();toast('Progress restored');render()}catch(x){toast('That text is not a valid backup')}
+      break;
+    case 'rs1':$('#rs').innerHTML='<p style="margin-bottom:8px">This erases every card, streak and badge.</p><div style="display:flex;gap:8px"><button class="btn warn" data-a="rs2">Yes, erase</button><button class="btn" data-a="rs3">Cancel</button></div>';break;
+    case 'rs2':S=fresh();save();toast('Progress erased');render();break;
+    case 'rs3':render();break;
+  }
+});
+function weakestTerr(){var w=0,m=2;for(var k=0;k<12;k++){var t=terrStats(k);if(t.avg<m){m=t.avg;w=k}}return w}
+document.addEventListener('input',function(e){
+  if(e.target.id==='search'){query=e.target.value;renderList()}
+});
+document.addEventListener('change',function(e){
+  var id=e.target.id;
+  if(id==='s-exam'){if(fromIso(e.target.value)!==null){S.set.exam=e.target.value;save();toast('Test date updated')}}
+  else if(id==='s-np'){S.set.np=+e.target.value;save()}
+  else if(id==='s-goal'){S.set.goal=+e.target.value;save()}
+  else if(id==='s-think'){S.set.think=e.target.checked;save()}
+});
+document.addEventListener('keydown',function(e){
+  if(!SES||e.metaKey||e.ctrlKey||e.altKey)return;
+  var tg=e.target&&e.target.tagName;if(tg==='INPUT'||tg==='TEXTAREA'||tg==='SELECT')return;
+  var k=e.key.toLowerCase(),s=SES;
+  if(s.stage==='ask'){
+    var i='1234'.indexOf(k);if(i<0)i='abcd'.indexOf(k);
+    if(i>=0){e.preventDefault();answer(i)}
+  }else if(s.stage==='think'&&(k==='enter'||k===' ')){e.preventDefault();s.stage='ask';render()}
+  else if(s.stage==='fb'){
+    if(!s.locked){var j='1234'.indexOf(k);if(j<0)j='abcd'.indexOf(k);if(j>=0&&s.order[j]===CARD[s.cur.id].a){e.preventDefault();lockIn()}}
+    else if(k==='enter'||k===' '){e.preventDefault();cont()}
+  }
+});
+
+render();
+initRemote();
+})();
+</script>
+
+<script>
+if('serviceWorker' in navigator){window.addEventListener('load',function(){navigator.serviceWorker.register('sw.js').catch(function(){})})}
+</script>
+</body>
+</html>
