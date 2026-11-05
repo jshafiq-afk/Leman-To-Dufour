@@ -21,6 +21,7 @@
 body{margin:0;padding:0}
 [hidden]{display:none!important}
 </style>
+<script>window.SHARE_URL=location.origin+location.pathname;</script>
 </head>
 <body>
 <style>
@@ -243,6 +244,16 @@ textarea.field{min-height:92px;font:12px/1.4 var(--f-mono);resize:vertical}
 .intro h2{font-size:17px;font-stretch:112%;font-weight:800}
 .intro ol{margin:8px 0 12px;padding-left:20px}
 .intro li{margin:4px 0}
+.dch{padding:14px 16px;border:1.5px solid var(--accent);border-radius:14px;background:var(--surface)}
+.dch p{margin:0}
+.dch-top{display:flex;align-items:baseline;justify-content:space-between;gap:12px}
+.dch-top b{font:600 30px/1 var(--f-mono)}
+.dch-top span{font:600 12px var(--f-mono);color:var(--muted)}
+.dch-act{margin-top:12px}
+.dots{display:flex;flex-wrap:wrap;justify-content:center;gap:6px;margin-top:14px}
+.dch .dots{justify-content:flex-start}
+.dots i{width:22px;height:22px;border-radius:6px;background:var(--accent)}
+.dots i.no{background:var(--red)}
 @media (prefers-reduced-motion: reduce){*{animation:none!important;transition:none!important}}
 </style>
 
@@ -478,8 +489,8 @@ function plural(n,w){return n+' '+w+(n===1?'':'s')}
 function inDays(d){var t=d-today();return t<=0?'today':(t===1?'tomorrow':'in '+t+' days')}
 
 /* ---------- state ---------- */
-function fresh(){var y=today()+365;return {v:1,u:0,c:{},days:{},xp:0,streak:0,last:0,best:0,ex:[],sp:0,ach:{},intro:0,tot:0,ok:0,set:{exam:iso(y),np:5,goal:20,think:true}}}
-function norm(o){var f=fresh();if(!o||typeof o!=='object')return f;o.set=Object.assign(f.set,o.set||{});['c','days','ach'].forEach(function(k){if(!o[k]||typeof o[k]!=='object')o[k]={}});if(!Array.isArray(o.ex))o.ex=[];['xp','streak','last','best','sp','intro','tot','ok','u'].forEach(function(k){if(typeof o[k]!=='number')o[k]=0});o.v=1;return o}
+function fresh(){var y=today()+365;return {v:1,u:0,c:{},days:{},xp:0,streak:0,last:0,best:0,ex:[],sp:0,dc:{cur:null,res:{},streak:0,last:0,best:0},ach:{},intro:0,tot:0,ok:0,set:{exam:iso(y),np:5,goal:20,think:true}}}
+function norm(o){var f=fresh();if(!o||typeof o!=='object')return f;o.set=Object.assign(f.set,o.set||{});['c','days','ach'].forEach(function(k){if(!o[k]||typeof o[k]!=='object')o[k]={}});if(!Array.isArray(o.ex))o.ex=[];if(!o.dc||typeof o.dc!=='object')o.dc=f.dc;if(!o.dc.res||typeof o.dc.res!=='object')o.dc.res={};['streak','last','best'].forEach(function(k){if(typeof o.dc[k]!=='number')o.dc[k]=0});if(!o.dc.cur||typeof o.dc.cur!=='object'||!Array.isArray(o.dc.cur.r))o.dc.cur=null;['xp','streak','last','best','sp','intro','tot','ok','u'].forEach(function(k){if(typeof o[k]!=='number')o[k]=0});o.v=1;return o}
 var S;
 try{S=norm(JSON.parse(localStorage.getItem(KEY)))}catch(e){S=fresh()}
 var SES=null,PENDING=null,view='home',filt='all',query='',DBREF=null,remote='local',pushT=null,pushing=false,pushAgain=false;
@@ -543,7 +554,10 @@ var ACH=[
  ['perfect','Clean sheet','10+ cards, no mistakes',function(){return !!S.ach.perfect}],
  ['exam','Dress rehearsal','90%+ on a mock exam',function(){return S.ex.some(function(e){return e[2]&&e[1]/e[2]>=.9})}],
  ['stamps','Passport','Earn 6 stamps',function(){return stampsWon()>=6}],
- ['solid','Fifty solid','50 cards at strength 4+',function(){var n=0;for(var k in S.c)if(S.c[k][0]>=4)n++;return n>=50}]
+ ['solid','Fifty solid','50 cards at strength 4+',function(){var n=0;for(var k in S.c)if(S.c[k][0]>=4)n++;return n>=50}],
+ ['dc1','Défi du jour','Finish a daily challenge',function(){return Object.keys(S.dc.res).length>=1}],
+ ['dc7','Seven in a row','7-day daily challenge streak',function(){return S.dc.best>=7}],
+ ['dcp','Perfect day','10 out of 10 on a daily challenge',function(){return !!S.ach.dcp}]
 ];
 function checkAch(){ACH.forEach(function(a){if(!S.ach[a[0]]&&a[3]()){S.ach[a[0]]=today();toast('Badge: '+a[1])}})}
 
@@ -570,6 +584,79 @@ function bumpDay(id,res,ph){
   var r=dayRec(today());r[0]++;S.tot++;if(res==='good'){r[1]++;S.ok++}if(ph==='new')r[2]++;
   if(r[0]===10){var t=today();if(S.last!==t){S.streak=(S.last>=t-2&&S.last>0)?S.streak+1:1;S.last=t;if(S.streak>S.best)S.best=S.streak;if(S.streak>1)toast(S.streak+'-day streak')}}
   if(r[0]===S.set.goal)toast('Daily goal reached');
+}
+
+/* ---------- daily challenge ---------- */
+function rng(seed){var a=seed>>>0;return function(){a=(a+0x6D2B79F5)>>>0;var t=a;t=Math.imul(t^(t>>>15),t|1);t^=t+Math.imul(t^(t>>>7),t|61);return((t^(t>>>14))>>>0)/4294967296}}
+function sshuffle(a,seed){a=a.slice();var r=rng(seed);for(var i=a.length-1;i>0;i--){var j=Math.floor(r()*(i+1));var t=a[i];a[i]=a[j];a[j]=t}return a}
+function dchIds(day){
+  var all=sshuffle(Object.keys(CARD).map(Number),day*7919+13),pick=[],cnt=[0,0,0,0],i;
+  for(i=0;i<all.length&&pick.length<8;i++){var sc=CARD[all[i]].s;if(cnt[sc]<2){cnt[sc]++;pick.push(all[i])}}
+  for(i=0;i<all.length&&pick.length<10;i++)if(pick.indexOf(all[i])<0)pick.push(all[i]);
+  return sshuffle(pick,day*31+7);
+}
+function dchCur(){var d=today();return S.dc.cur&&S.dc.cur.d===d?S.dc.cur:null}
+function startDch(){
+  var day=today();
+  if(S.dc.res[day]){toast('Today’s challenge is done. Next one tomorrow.');return}
+  var ids=dchIds(day),cur=dchCur();
+  if(!cur){cur=S.dc.cur={d:day,r:[]}}
+  var r=cur.r,okn=0;r.forEach(function(x){if(x==='1')okn++});
+  SES={mode:'dch',opt:{},queue:ids.slice(r.length).map(function(id){return {id:id,ph:'exam'}}),pool:null,done:r.length,ok:okn,bad:r.length-okn,idk:0,newSeen:0,failed:{},loops:{},combo:0,best:0,xp:0,alt0:altitude(),stage:'ask',cur:null,order:[],locked:true,res:null,exam:ids.slice(0,r.length).map(function(id,i){return {id:id,res:r[i]==='1'?'good':'bad'}}),wrong:[],left:60000,score:0,t0:Date.now(),timer:null,lastState:null};
+  nextCard();
+}
+function finishDch(s){
+  var day=today(),cur=dchCur(),bits=cur?cur.r.join(''):'',sc=0,i;
+  for(i=0;i<bits.length;i++)if(bits.charAt(i)==='1')sc++;
+  S.dc.res[day]=[sc,bits.length,bits];
+  S.dc.streak=(S.dc.last===day-1)?S.dc.streak+1:1;
+  S.dc.last=day;if(S.dc.streak>S.dc.best)S.dc.best=S.dc.streak;
+  S.dc.cur=null;
+  var ks=Object.keys(S.dc.res).map(Number).sort(function(a,b){return a-b});
+  while(ks.length>60){delete S.dc.res[ks.shift()]}
+  if(sc===10&&bits.length===10&&!S.ach.dcp){S.ach.dcp=day;toast('Badge: Perfect day')}
+}
+function dcStreakNow(){return S.dc.last>=today()-1?S.dc.streak:0}
+function dcAvg(){var t=0,n=0;for(var k in S.dc.res){var r=S.dc.res[k];if(r[1]){t+=r[0]/r[1];n++}}return n?Math.round(t/n*100):0}
+function dcTotals(){var n=Object.keys(S.dc.res).length;return n?' Daily challenges: <b>'+n+'</b> played, average <b>'+dcAvg()+'%</b>, best streak <b>'+S.dc.best+'</b>.':''}
+function dotsHTML(bits){var h='<div class="dots" role="img" aria-label="Result by question">';for(var i=0;i<bits.length;i++)h+='<i class="'+(bits.charAt(i)==='1'?'ok':'no')+'"></i>';return h+'</div>'}
+function dchText(day){
+  var r=S.dc.res[day];if(!r)return '';
+  var sq='';for(var i=0;i<r[2].length;i++)sq+=r[2].charAt(i)==='1'?'🟩':'🟥';
+  var st=(day===today()&&S.dc.streak>1)?' · '+S.dc.streak+'-day streak':'';
+  return 'Du Léman à la Dufour · Défi du '+dstr(day)+'\n'+sq+'\n'+r[0]+'/'+r[1]+st+(window.SHARE_URL?'\n'+window.SHARE_URL:'');
+}
+function shareDch(btn){
+  var text=dchText(today());if(!text)return;
+  function box(){
+    var p=btn&&btn.parentNode;if(!p)return;
+    var ta=p.querySelector('textarea.sharebox');
+    if(!ta){ta=document.createElement('textarea');ta.className='field sharebox';ta.readOnly=true;ta.setAttribute('aria-label','Result text to copy');ta.style.marginTop='8px';p.appendChild(ta)}
+    ta.value=text;ta.rows=4;ta.focus();ta.select();toast('Select the text and copy it');
+  }
+  function copy(){try{navigator.clipboard.writeText(text).then(function(){toast('Result copied. Paste it in your chat.')}).catch(box)}catch(e){box()}}
+  if(navigator.share){try{navigator.share({text:text}).catch(function(e){if(!e||e.name!=='AbortError')copy()})}catch(e){copy()}}else copy();
+}
+function dchBlurb(sc,n){var p=n?sc/n:0;return p===1?'Perfect. Nothing got past you.':p>=.8?'Strong day.':p>=.6?'Solid. The misses are below.':p>=.4?'A start. Read the misses once more.':'Tough one. These cards will come back.'}
+function dchCardHTML(){
+  var day=today(),r=S.dc.res[day],cur=dchCur(),h='<section class="sec"><h2>Défi du jour</h2><div class="dch">';
+  if(r){
+    h+='<div class="dch-top"><b>'+r[0]+'/'+r[1]+'</b><span>'+dcStreakNow()+'-day streak</span></div>'+dotsHTML(r[2])+'<div class="dch-act"><button class="btn pri block" data-a="share">Share result</button></div><p class="muted small" style="margin-top:8px">Next challenge tomorrow. Everyone gets the same 10.</p>';
+  }else{
+    var n=cur?cur.r.length:0;
+    h+='<p>10 questions, the same for everyone today. One try, so make it count.</p><div class="dch-act"><button class="btn pri block" data-a="dch">'+(n?'Resume ('+n+' of 10 done)':'Play today’s challenge')+'</button></div>'+(dcStreakNow()?'<p class="muted small" style="margin-top:8px">'+dcStreakNow()+'-day streak. Play today to keep it.</p>':'');
+  }
+  return h+'</div></section>';
+}
+function dchSummary(s){
+  var day=today(),r=S.dc.res[day]||[0,0,''],h='<header class="top"><h1>Défi du jour</h1></header>';
+  h+='<div class="sum">'+contours()+'<div class="eyebrow">'+dstr(day)+'</div><div class="gain" style="color:var(--ink)">'+r[0]+'<span style="font-size:.4em;color:var(--muted)">/'+r[1]+'</span></div><div class="sub">'+dchBlurb(r[0],r[1])+'</div>'+dotsHTML(r[2])+'</div>';
+  h+='<div class="grid3"><div><b>'+S.dc.streak+'</b><span>day streak</span></div><div><b>'+S.dc.best+'</b><span>best streak</span></div><div><b>'+dcAvg()+'%</b><span>average</span></div></div>';
+  h+='<section class="sec"><h2>Send it to your friends</h2><div><button class="btn pri block" data-a="share">Share result</button></div><p class="muted small" style="margin-top:8px">They get the same 10 questions today.</p></section>';
+  var w=s.exam.filter(function(e){return e.res!=='good'});
+  if(w.length){h+='<section class="sec"><h2>To look at again ('+w.length+')</h2><div class="miss">'+w.map(function(e){var c=CARD[e.id];return '<div><b>'+esc(c.q)+'</b><span>'+esc(c.o[c.a])+'</span></div>'}).join('')+'</div></section>'}
+  h+='<div class="dock"><div><button class="btn block" data-a="done">Back to base</button></div></div>';
+  return h;
 }
 
 /* ---------- session builders ---------- */
@@ -621,7 +708,7 @@ function nextCard(){
   if(!s.queue.length)return endSession();
   s.cur=s.queue[0];
   var c=CARD[s.cur.id];
-  s.order=shuffle([0,1,2,3]);
+  s.order=(s.mode==='dch')?sshuffle([0,1,2,3],today()*131+s.cur.id):shuffle([0,1,2,3]);
   s.res=null;s.locked=true;
   var cs=C(s.cur.id);
   s.stage=(S.set.think&&s.cur.ph==='review'&&cs.b>=2)?'think':'ask';
@@ -646,6 +733,13 @@ function answer(i){
   else{s.bad++;if(res==='idk')s.idk++;if(res==='bad')s.combo=0;s.wrong.push(it.id)}
   if(ph==='new')s.newSeen++;
   var L=s.loops;
+  if(s.mode==='dch'){
+    var good=(res==='good');
+    s.exam.push({id:it.id,res:good?'good':'bad'});
+    if(S.dc.cur&&S.dc.cur.d===today())S.dc.cur.r.push(good?'1':'0');
+    s.res=res;s.chosen=i;s.stage='fb';s.locked=good;s.crossed=[];
+    save();render();return;
+  }
   if(s.mode==='exam'){s.exam.push({id:it.id,res:res});save();return nextCard()}
   if(s.mode==='sprint'){
     if(res==='good'){s.score++;s.end+=0}else{s.end-=3000}
@@ -674,6 +768,7 @@ function cont(){
 function quit(){
   var s=SES;if(!s)return;
   if(s.timer){clearInterval(s.timer);s.timer=null}
+  if(s.mode==='dch'&&s.stage!=='done'){SES=null;render();return}
   if(s.done>0&&s.stage!=='done'){return endSession()}
   SES=null;if(PENDING){var p=PENDING;PENDING=null;if((p.u||0)>(S.u||0)){adopt(p);return}}
   render();
@@ -681,6 +776,7 @@ function quit(){
 function endSession(){
   var s=SES;if(s.timer){clearInterval(s.timer);s.timer=null}
   s.stage='done';s.alt1=altitude();
+  if(s.mode==='dch')finishDch(s);
   if(s.mode==='exam'){var g=s.exam.filter(function(e){return e.res==='good'}).length;S.ex.push([today(),g,s.exam.length]);S.ex=S.ex.slice(-12)}
   if(s.mode==='sprint'){S.sp=Math.max(S.sp,s.score)}
   if((s.mode==='daily'||s.mode==='terr')&&s.done>=10&&s.bad===0)S.ach.perfect=today();
@@ -754,6 +850,7 @@ function homeHTML(){
   h+='<div class="stat"><div class="v">'+ringSVG(ans/goal)+'<span>'+ans+'</span></div><div class="l">of '+goal+' today</div></div>';
   h+='<div class="stat"><div class="v">'+Math.round(readiness()*100)+'<span style="font-size:14px;color:var(--muted)">%</span></div><div class="l">exam ready</div></div></div>';
   h+='<button class="cta" data-a="daily"><div><b>'+cta+'</b><span>'+sub+'</span></div>'+I.go+'</button>';
+  h+=dchCardHTML();
   h+='<section class="sec"><h2>Other ways to train</h2>';
   var mk=mistakes().length;
   h+=row('mistakes',I.redo,'Mistakes','Cards you have missed and not yet fixed',mk);
@@ -796,7 +893,7 @@ function mapHTML(){
   h+='</ul></section>';
   h+='<section class="sec"><h2>Badges</h2><div class="badges">'+ACH.map(function(a){var got=!!S.ach[a[0]];return '<div class="badge'+(got?' got':'')+'"><b>'+a[1]+'</b><span>'+a[2]+'</span></div>'}).join('')+'</div></section>';
   var acc=S.tot?Math.round(S.ok/S.tot*100):0;
-  h+='<section class="sec"><h2>Totals</h2><div class="note">'+plural(S.tot,'answer')+' so far, <b>'+acc+'%</b> correct. Best streak <b>'+S.best+'</b> days. '+(S.ex.length?'Last mock exam: <b>'+Math.round(S.ex[S.ex.length-1][1]/S.ex[S.ex.length-1][2]*100)+'%</b>.':'No mock exam yet.')+'</div></section>';
+  h+='<section class="sec"><h2>Totals</h2><div class="note">'+plural(S.tot,'answer')+' so far, <b>'+acc+'%</b> correct. Best streak <b>'+S.best+'</b> days. '+(S.ex.length?'Last mock exam: <b>'+Math.round(S.ex[S.ex.length-1][1]/S.ex[S.ex.length-1][2]*100)+'%</b>.':'No mock exam yet.')+dcTotals()+'</div></section>';
   return h;
 }
 
@@ -843,7 +940,7 @@ function chipsHTML(){
   if(it.ph==='new')h+='<span class="tag new">New</span>';
   else if(it.ph==='retry')h+='<span class="tag retry">Again</span>';
   else if(it.ph==='second')h+='<span class="tag new">Quick check</span>';
-  if(s.mode!=='exam'&&s.mode!=='sprint')h+=strength(cs.b);
+  if(s.mode==='dch')h+='<span class="tag new">Défi du jour</span>';else if(s.mode!=='exam'&&s.mode!=='sprint')h+=strength(cs.b);
   return h+'</div>';
 }
 function sessionHTML(){
@@ -855,7 +952,7 @@ function sessionHTML(){
   h+=chipsHTML();
   var shake=(s.stage==='fb'&&s.res==='bad')?' shake':'';
   h+='<div class="qcard'+shake+'"><div class="qt">'+esc(card.q)+'</div>';
-  if(s.mode==='exam')h+='<div class="nb">Question '+(s.done+1)+' of '+(s.done+s.queue.length)+'</div>';
+  if(s.mode==='exam'||s.mode==='dch'){var qn=s.stage==='fb'?s.done:s.done+1;h+='<div class="nb">Question '+qn+' of '+(s.done+s.queue.length)+'</div>'}
   h+='</div>';
   if(s.stage==='think'){
     h+='<div class="think"><b>Answer in your head</b>Say it out loud if you can. Then check.</div>';
@@ -877,7 +974,7 @@ function sessionHTML(){
   });
   h+='</div>';
   if(!fb){
-    h+='<button class="idk" data-a="idk">'+(s.mode==='exam'?'Skip':'I don’t know yet')+'</button>';
+    h+='<button class="idk" data-a="idk">'+(s.mode==='exam'||s.mode==='dch'?'Skip':'I don’t know yet')+'</button>';
     return h;
   }
   if(s.mode==='sprint')return h;
@@ -904,6 +1001,7 @@ function afterSession(){
 }
 function summaryHTML(){
   var s=SES,g=Math.round(s.alt1-s.alt0),h='';
+  if(s.mode==='dch')return dchSummary(s);
   var acc=s.done?Math.round(s.ok/s.done*100):0;
   h+='<header class="top"><h1>'+(s.mode==='exam'?'Mock exam':s.mode==='sprint'?'Sprint 60':'Session done')+'</h1></header>';
   if(s.mode==='exam'){
@@ -940,6 +1038,8 @@ document.addEventListener('click',function(e){
     case 'intro':S.intro=1;save();render();break;
     case 'daily':startSession('daily',{extra:(Math.min(dueList().length,40)+Math.max(0,S.set.np-newToday())===0&&unseenList().length>0)});
       if(!SES&&dueList().length===0&&unseenList().length===0){startSession('terr',{k:weakestTerr()})}break;
+    case 'dch':startDch();break;
+    case 'share':shareDch(el);break;
     case 'mistakes':startSession('mistakes');break;
     case 'sprint':startSession('sprint');break;
     case 'exam':startSession('exam');break;
